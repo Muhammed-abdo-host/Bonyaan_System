@@ -1,5 +1,4 @@
-<x-layouts>
-     <!-- HOME VIEW SECTION -->
+@section('content')     <!-- HOME VIEW SECTION -->
   <section id="view-home" class="view-section active animated-fade">
     <!-- Hero Section -->
     <div class="hero-wrapper py-5">
@@ -246,4 +245,4 @@
       </div>
     </div>
   </section>
-</x-layouts>
+@endsection

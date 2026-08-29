@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('job_applicants', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email')->index();
+            $table->string('phone')->nullable();
+            $table->string('position');
+            $table->string('cv_path')->nullable();
+            $table->enum('status', ['pending', 'reviewed', 'hired', 'rejected'])->default('pending');
+
             $table->timestamps();
         });
     }

@@ -1,5 +1,4 @@
-<x-layouts>
-    
+@section('content')    
   <!-- REQUEST QUOTE VIEW SECTION -->
   <section id="view-quote" class="view-section active animated-fade py-5">
     <div class="container py-4">
@@ -93,4 +92,4 @@
       </div>
     </div>
   </section>
-</x-layouts>
+@endsection

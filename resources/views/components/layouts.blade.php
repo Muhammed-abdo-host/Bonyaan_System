@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <!-- Custom Styling System -->
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 
 <body>
@@ -71,8 +71,8 @@
         </div>
     </nav>
 
-
-{{$slot}}
+@yield('content')
+@yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
         <div class="container">

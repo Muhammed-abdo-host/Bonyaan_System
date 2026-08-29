@@ -1,5 +1,4 @@
-<x-layouts>
- 
+@section('content') 
   <!-- BLOG VIEW SECTION -->
   <section id="view-blog" class="view-section active animated-fade py-5">
     <div class="container py-4">
@@ -48,4 +47,4 @@
       </div>
     </div>
   </section>   
-</x-layouts>
+@endsection

@@ -1,5 +1,4 @@
-<x-layouts>
-     <!-- PROJECTS VIEW SECTION -->
+@section('content')     <!-- PROJECTS VIEW SECTION -->
   <section id="view-projects" class="view-section active animated-fade py-5">
     <div class="container py-4">
       <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
@@ -26,4 +25,4 @@
       </div>
     </div>
   </section>
-</x-layouts>
+@endsection

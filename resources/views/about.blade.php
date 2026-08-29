@@ -1,4 +1,5 @@
-<x-layouts>
+@extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+@section('content')
      <!-- ABOUT VIEW SECTION -->
   <section id="view-about" class="view-section active animated-fade py-5">
     <div class="container py-4">
@@ -68,4 +69,4 @@
     </div>
   </section>
 
-</x-layouts>
+@endsection

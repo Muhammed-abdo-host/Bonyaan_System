@@ -1,4 +1,4 @@
-<x-layouts>
+@section('content')
     <!-- CONTACT VIEW SECTION -->
   <section id="view-contact" class="view-section active animated-fade py-5">
     <div class="container py-4">
@@ -71,4 +71,4 @@
     </div>
   </section>
 
-</x-layouts>
+@endsection

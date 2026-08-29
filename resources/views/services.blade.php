@@ -1,5 +1,4 @@
-<x-layouts>
-      <!-- SERVICES VIEW SECTION -->
+@section('content')      <!-- SERVICES VIEW SECTION -->
   <section id="view-services" class="view-section active animated-fade py-5">
     <div class="container py-4">
       <div class="text-center max-w-700 mx-auto mb-5">
@@ -73,4 +72,4 @@
       </div>
     </div>
   </section>
-</x-layouts>
+@endsection

@@ -1,0 +1,342 @@
+/* project_MET - Premier Construction & Contracting Web System
+   Vanilla CSS & Bootstrap 5 Custom Styling System */
+
+:root {
+  --met-navy: #0B1325;
+  --met-navy-light: #16223B;
+  --met-gold: #D4AF37;
+  --met-gold-hover: #F3C623;
+  --met-blue: #1E3A8A;
+  --met-blue-accent: #2563EB;
+  --met-cyan: #06B6D4;
+  --met-dark: #0F172A;
+  --met-light-bg: #F8FAFC;
+  --met-card-border: rgba(226, 232, 240, 0.8);
+  --met-shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --met-shadow-lg: 0 20px 25px -5px rgba(11, 19, 37, 0.1), 0 10px 10px -5px rgba(11, 19, 37, 0.04);
+  --met-font-en: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  font-family: var(--met-font-en);
+  background-color: #F8FAFC;
+  color: #1E293B;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Navbar & Header */
+.top-header {
+  background-color: var(--met-navy);
+  color: #94A3B8;
+  font-size: 0.875rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.met-navbar {
+  background-color: var(--met-navy-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.met-brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  color: #FFFFFF !important;
+  text-decoration: none;
+}
+
+.met-brand span {
+  color: var(--met-gold);
+}
+
+.nav-link {
+  color: #E2E8F0 !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--met-gold) !important;
+  background-color: rgba(212, 175, 55, 0.08);
+}
+
+/* Glassmorphism Components */
+.glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--met-card-border);
+  border-radius: 16px;
+  box-shadow: var(--met-shadow-lg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 25px 30px -5px rgba(11, 19, 37, 0.12);
+}
+
+.glass-card-dark {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border-radius: 16px;
+}
+
+/* Hero Carousel / Section */
+.hero-wrapper {
+  position: relative;
+  min-height: 80vh;
+  background: linear-gradient(135deg, rgba(11, 19, 37, 0.88), rgba(30, 58, 138, 0.82)),
+              url('https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #FFFFFF;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #CBD5E1;
+  max-width: 650px;
+}
+
+/* Buttons & Badges */
+.text-gold {
+  color: var(--met-gold) !important;
+}
+
+.bg-met-navy {
+  background-color: var(--met-navy) !important;
+}
+
+.bg-met-navy-light {
+  background-color: var(--met-navy-light) !important;
+}
+
+.btn-met-gold {
+  background: linear-gradient(135deg, #D4AF37 0%, #F3C623 100%);
+  color: var(--met-navy);
+  font-weight: 700;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-met-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.45);
+  color: var(--met-navy);
+}
+
+.btn-met-outline {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-met-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+/* Service Card */
+.service-card {
+  border: none;
+  border-radius: 16px;
+  background: #FFFFFF;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(11, 19, 37, 0.12);
+  border-bottom: 4px solid var(--met-gold);
+}
+
+.service-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--met-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Stat Box */
+.stat-box {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.75rem 1rem;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.stat-number {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--met-gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+/* Toast styling */
+.met-toast-wrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.badge-gold {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: #B48B1B;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-weight: 600;
+  padding: 0.4em 0.8em;
+  border-radius: 50px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animated-fade {
+  animation: fadeIn 0.35s ease forwards;
+}
+
+/* Custom Data Table */
+.custom-table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.custom-table tbody tr {
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: all 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+  transform: scale(1.001);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.custom-table td, .custom-table th {
+  padding: 1rem 1.25rem;
+  vertical-align: middle;
+  border: none;
+}
+
+.custom-table th {
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.custom-table td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.custom-table td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+}
+
+.subview-section {
+  display: none;
+}
+
+.subview-section.active {
+  display: block;
+}
+
+/* Utility Helpers */
+.max-w-700 {
+  max-width: 700px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.btn-outline-dark.active,
+.btn-outline-dark:active,
+.filter-btn.active {
+    background-color: var(--met-navy) !important;
+    color: #FFFFFF !important;
+    border-color: var(--met-navy) !important;
+}
+
+.btn-outline-dark:hover,
+.filter-btn:hover {
+    background-color: var(--met-navy-light) !important;
+    color: #FFFFFF !important;
+    border-color: var(--met-navy-light) !important;
+}
+/* إصلاح لون زرار الـ Submit في صفحة الـ Contact */
+.btn-met-navy {
+    background-color: var(--met-navy) !important;
+    color: #ffffff !important;
+    border-color: var(--met-navy) !important;
+}
+
+/* عشان يبقى شكله شيك لما تقف عليه بالماوس */
+.btn-met-navy:hover {
+    background-color: var(--met-navy-light) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
