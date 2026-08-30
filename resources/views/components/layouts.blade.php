@@ -179,6 +179,7 @@
         <script src="{{ asset('js/estimator.js') }}"></script>
 
     <script src="./app.js"></script>
+    <script src="{{ asset('js/admin-leads.js') }}"></script>
 </body>
 
 </html>

@@ -51,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client', fn() => view('client'))
         ->name('client.portal')
         ->middleware('can:access-client');
+
+    Route::prefix('admin')->middleware('can:access-admin')->group(function () {
+        Route::get('/leads', [\App\Http\Controllers\Admin\LeadAdminController::class, 'index'])->name('admin.leads.index');
+        Route::patch('/leads/{lead}', [\App\Http\Controllers\Admin\LeadAdminController::class, 'update'])->name('admin.leads.update');
+    });
 });
 
 Route::post('/estimator/calculate', [EstimatorController::class, 'calculate'])->name('estimator.calculate');
