@@ -20,12 +20,15 @@ class project extends Model
         'progress_percent',
         'start_date',
         'end_date',
+        'budget',
+        'image',
+        'description'
 
     ];
 
     public function client()
     {
-        return $this->belongsTo(User::class , 'client_id');
+        return $this->belongsTo(User::class, 'client_id');
     }
     public function siteUpdates()
     {

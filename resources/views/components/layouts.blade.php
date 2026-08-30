@@ -60,19 +60,19 @@
                     <li class="nav-item"><a class="nav-link" href="/blog">Blog & News</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                 </ul
-                <div class="d-flex align-items-center gap-2">
-                    <a class="btn btn-sm btn-outline-warning text-white me-2" href="/client">
-                        <i class="bi bi-person-workspace"></i> Client Portal
-                    </a>
-                    <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="/adminbanal">
-                        <i class="bi bi-speedometer2"></i> Admin Panel
-                    </a>
-                </div>
+                    <div class="d-flex align-items-center gap-2">
+                <a class="btn btn-sm btn-outline-warning text-white me-2" href="/client">
+                    <i class="bi bi-person-workspace"></i> Client Portal
+                </a>
+                <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="/adminbanal">
+                    <i class="bi bi-speedometer2"></i> Admin Panel
+                </a>
             </div>
+        </div>
         </div>
     </nav>
 
-@yield('content')
+    @yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
         <div class="container">
@@ -174,11 +174,11 @@
     <div id="toast-container" class="met-toast-wrapper"></div>
 
     <!-- JS DEPENDENCIES -->
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('js/estimator.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./app.js"></script>
+    <script src="{{ asset('js/estimator.js') }}"></script>
+
     <script src="{{ asset('js/admin-leads.js') }}"></script>
 </body>
 

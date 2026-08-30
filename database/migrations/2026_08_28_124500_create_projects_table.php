@@ -16,18 +16,21 @@ return new class extends Migration
 
 
             $table->foreignId('client_id')
-            ->constrained('users')
-            ->restrictOnDelete();
+                ->constrained('users')
+                ->restrictOnDelete();
 
             $table->string('name');
-            $table->enum('type',['villa','office','mall','warehouse']);
+            $table->enum('type', ['villa', 'office', 'mall', 'warehouse']);
             $table->string('location')->nullable();
-            $table->decimal('area',10,2);
+            $table->decimal('area', 10, 2);
             $table->unsignedInteger('floors');
-            $table->enum('status',['ongoing','completed'])->default('ongoing');
+            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
             $table->unsignedInteger('progress_percent')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->string('budget')->nullable()->after('progress_percent');
+            $table->string('image')->nullable()->after('budget');
+            $table->text('description')->nullable()->after('image');
             $table->softDeletes();
             $table->timestamps();
         });
