@@ -1,3 +1,5 @@
+ @extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+
  @section('content')     <!-- COST ESTIMATOR VIEW SECTION -->
   <section id="view-estimator" class="view-section active animated-fade py-5">
     <div class="container py-4">

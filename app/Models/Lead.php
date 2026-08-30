@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class lead extends Model
+class Lead extends Model
 {
        protected $fillable = [
         'name', 'email', 'phone', 'building_type',

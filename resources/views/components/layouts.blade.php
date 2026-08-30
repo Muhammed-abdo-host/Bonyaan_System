@@ -72,7 +72,6 @@
     </nav>
 
 @yield('content')
-@yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
         <div class="container">

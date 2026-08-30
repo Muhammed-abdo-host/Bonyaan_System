@@ -1,3 +1,5 @@
+@extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+
 @section('content')    
   <!-- REQUEST QUOTE VIEW SECTION -->
   <section id="view-quote" class="view-section active animated-fade py-5">
