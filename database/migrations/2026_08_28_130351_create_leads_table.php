@@ -16,11 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->index();
             $table->string('phone')->nullable();
+            $table->string('location')->nullable(); 
             $table->string('building_type');
             $table->decimal('area', 10, 2);
             $table->unsignedInteger('floors');
             $table->string('finishing_tier');
+            $table->json('extras')->nullable();
             $table->decimal('estimated_cost', 12, 2)->nullable();
+            $table->text('notes')->nullable();
             $table->enum('status', ['new', 'contacted', 'converted', 'rejected'])->default('new');
 
             $table->timestamps();

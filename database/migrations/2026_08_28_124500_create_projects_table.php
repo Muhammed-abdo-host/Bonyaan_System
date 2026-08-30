@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('area',10,2);
             $table->unsignedInteger('floors');
             $table->enum('status',['ongoing','completed'])->default('ongoing');
-            $table->unsignedInteger('progress_persent')->default(0);
+            $table->unsignedInteger('progress_percent')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->softDeletes();

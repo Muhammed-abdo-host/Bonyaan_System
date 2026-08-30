@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>" />
@@ -173,7 +174,10 @@
     <div id="toast-container" class="met-toast-wrapper"></div>
 
     <!-- JS DEPENDENCIES -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('js/estimator.js') }}"></script>
+
     <script src="./app.js"></script>
 </body>
 

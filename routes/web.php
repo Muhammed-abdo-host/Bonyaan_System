@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EstimatorController;
+
 
 Route::get('/', function () {
     return view('home');
@@ -50,3 +52,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('client.portal')
         ->middleware('can:access-client');
 });
+
+Route::post('/estimator/calculate', [EstimatorController::class, 'calculate'])->name('estimator.calculate');
+Route::post('/quote/submit', [EstimatorController::class, 'store'])->name('quote.store');
