@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'bonyaan' => [
+        'quote_notification_email' => env('QUOTE_NOTIFICATION_EMAIL'),
+        'contact_notification_email' => env('CONTACT_NOTIFICATION_EMAIL'),
+    ],
 
 ];

@@ -7,15 +7,20 @@ use App\Models\Lead;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\QuoteAttachment;
+use Illuminate\Support\Facades\Storage;
 
 class LeadAdminController extends Controller
 {
     /**
      * List all leads for the CRM Leads admin panel, newest first.
      */
-    public function index(): JsonResponse
-    {
-        $leads = Lead::latest()->get()->map(function (Lead $lead) {
+ public function index(): JsonResponse
+{
+    $leads = Lead::with('attachments')
+        ->latest()
+        ->get()
+        ->map(function (Lead $lead) {
             return [
                 'id' => $lead->id,
                 'name' => $lead->name,
@@ -28,11 +33,19 @@ class LeadAdminController extends Controller
                 'status' => $lead->status,
                 'date' => $lead->created_at->format('Y-m-d'),
                 'notes' => $lead->notes,
+
+                'attachments' => $lead->attachments->map(fn (QuoteAttachment $attachment) => [
+                    'id' => $attachment->id,
+                    'name' => $attachment->original_name,
+                    'size' => $attachment->size,
+                    'mime_type' => $attachment->mime_type,
+                    'download_url' => route('admin.attachments.download', $attachment),
+                ])->values(),
             ];
         });
 
-        return response()->json($leads);
-    }
+    return response()->json($leads);
+}
 
     /**
      * Update a lead's status from the CRM dropdown.
@@ -50,4 +63,20 @@ class LeadAdminController extends Controller
             'lead' => $lead,
         ]);
     }
+    public function downloadAttachment(QuoteAttachment $attachment)
+{
+    abort_unless(
+        Storage::disk('local')->exists($attachment->path),
+        404,
+        'Attachment file not found.'
+    );
+
+    return Storage::disk('local')->download(
+        $attachment->path,
+        $attachment->original_name,
+        [
+            'Content-Type' => $attachment->mime_type,
+        ]
+    );
+}
 }

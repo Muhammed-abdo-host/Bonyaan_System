@@ -6,6 +6,11 @@ use App\Models\Lead;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Mail\NewQuoteNotification;
+use App\Mail\QuoteConfirmation;
+use App\Models\QuoteAttachment;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EstimatorController extends Controller
 {
@@ -46,56 +51,81 @@ class EstimatorController extends Controller
         return response()->json($this->computeEstimate($validated));
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'max:30'],
-            'location' => ['required', 'string', 'max:255'],
-            'type' => ['nullable', 'string', 'max:255'],
-            'area' => ['nullable', 'numeric', 'min:1'],
-            'floors' => ['nullable', 'integer', 'min:1'],
-            'tier' => ['nullable', 'string', 'max:255'],
-            'extras' => ['array'],
-            'budget' => ['nullable', 'string', 'max:255'],
-            'notes' => ['nullable', 'string'],
-        ]);
+  public function store(Request $request): JsonResponse
+{
+    $validated = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'email', 'max:255'],
+        'phone' => ['required', 'string', 'max:30'],
+        'location' => ['required', 'string', 'max:255'],
+        'type' => ['nullable', 'string', 'max:255'],
+        'area' => ['nullable', 'numeric', 'min:1'],
+        'floors' => ['nullable', 'integer', 'min:1'],
+        'tier' => ['nullable', 'string', 'max:255'],
+        'extras' => ['nullable', 'array'],
+        'budget' => ['nullable', 'string', 'max:255'],
+        'notes' => ['nullable', 'string'],
 
-        $estimate = null;
-        if (
-            isset(self::BASE_RATE[$validated['type'] ?? null])
-            && isset(self::TIER_MULTIPLIER[$validated['tier'] ?? null])
-        ) {
-            $estimate = $this->computeEstimate([
-                'area' => $validated['area'] ?? 100,
-                'floors' => $validated['floors'] ?? 1,
-                'type' => $validated['type'],
-                'tier' => $validated['tier'],
-                'extras' => $validated['extras'] ?? [],
-            ]);
-        }
+        'attachments' => ['nullable', 'array', 'max:5'],
+        'attachments.*' => [
+            'file',
+            'mimes:pdf,dwg,zip',
+            'max:51200', // 50 MB لكل ملف
+        ],
+    ]);
 
-        $lead = Lead::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'location' => $validated['location'],
-            'building_type' => $validated['type'] ?? 'unspecified',
-            'area' => $validated['area'] ?? 0,
+    $estimate = null;
+
+    if (
+        isset(self::BASE_RATE[$validated['type'] ?? null])
+        && isset(self::TIER_MULTIPLIER[$validated['tier'] ?? null])
+    ) {
+        $estimate = $this->computeEstimate([
+            'area' => $validated['area'] ?? 100,
             'floors' => $validated['floors'] ?? 1,
-            'finishing_tier' => $validated['tier'] ?? 'standard',
+            'type' => $validated['type'],
+            'tier' => $validated['tier'],
             'extras' => $validated['extras'] ?? [],
-            'estimated_cost' => $estimate['total'] ?? null,
-            'notes' => $validated['notes'] ?? null,
-            'status' => 'new',
         ]);
-
-        return response()->json([
-            'message' => 'Quote proposal request submitted successfully! Our engineers will contact you.',
-            'lead_id' => $lead->id,
-        ], 201);
     }
+
+    $lead = Lead::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'phone' => $validated['phone'],
+        'location' => $validated['location'],
+        'building_type' => $validated['type'] ?? 'unspecified',
+        'area' => $validated['area'] ?? 0,
+        'floors' => $validated['floors'] ?? 1,
+        'finishing_tier' => $validated['tier'] ?? 'standard',
+        'extras' => $validated['extras'] ?? [],
+        'estimated_cost' => $estimate['total'] ?? null,
+        'notes' => $validated['notes'] ?? null,
+        'status' => 'new',
+    ]);
+
+    foreach ($request->file('attachments', []) as $file) {
+        $path = $file->store("quotes/{$lead->id}", 'local');
+
+        $lead->attachments()->create([
+            'original_name' => $file->getClientOriginalName(),
+            'path' => $path,
+            'mime_type' => $file->getMimeType() ?? 'application/octet-stream',
+            'size' => $file->getSize(),
+        ]);
+    }
+
+    Mail::to($lead->email)->send(new QuoteConfirmation($lead));
+
+    Mail::to(config('services.bonyaan.quote_notification_email'))
+        ->send(new NewQuoteNotification($lead));
+
+    return response()->json([
+        'message' => 'Quote proposal request submitted successfully! Our engineers will contact you.',
+        'lead_id' => $lead->id,
+        'attachments_count' => $lead->attachments()->count(),
+    ], 201);
+}
 
     private function computeEstimate(array $data): array
     {

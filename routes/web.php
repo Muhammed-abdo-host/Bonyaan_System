@@ -55,13 +55,21 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware('can:access-admin')->group(function () {
         Route::get('/leads', [\App\Http\Controllers\Admin\LeadAdminController::class, 'index'])->name('admin.leads.index');
         Route::patch('/leads/{lead}', [\App\Http\Controllers\Admin\LeadAdminController::class, 'update'])->name('admin.leads.update');
+        Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('admin.projects.index');
+        Route::get('/clients', [\App\Http\Controllers\Admin\ProjectController::class, 'clients'])->name('admin.clients.index');
+        Route::post('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'store'])->name('admin.projects.store');
+        Route::patch('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'update'])->name('admin.projects.update');
+
+        Route::delete('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroy'])->name('admin.projects.destroy');
+        Route::get(
+            '/attachments/{attachment}/download',
+            [\App\Http\Controllers\Admin\LeadAdminController::class, 'downloadAttachment']
+        )->name('admin.attachments.download');
     });
-    Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('admin.projects.index');
-    Route::get('/clients', [\App\Http\Controllers\Admin\ProjectController::class, 'clients'])->name('admin.clients.index');
-    Route::post('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'store'])->name('admin.projects.store');
-    Route::patch('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'update'])->name('admin.projects.update');
-    Route::delete('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroy'])->name('admin.projects.destroy');
 });
 
 Route::post('/estimator/calculate', [EstimatorController::class, 'calculate'])->name('estimator.calculate');
 Route::post('/quote/submit', [EstimatorController::class, 'store'])->name('quote.store');
+Route::post('/contact/submit', [\App\Http\Controllers\ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.submit');

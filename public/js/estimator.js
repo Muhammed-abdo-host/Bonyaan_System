@@ -97,34 +97,43 @@ function checkQuotePreset() {
     console.error('Could not parse saved estimate:', err);
   }
 }
-
 async function submitQuoteForm(e) {
   e.preventDefault();
 
   const recaptcha = document.getElementById('quote-recaptcha');
+
   if (recaptcha && !recaptcha.checked) {
     alert('Please check the reCAPTCHA verification box.');
     return;
   }
 
   const preset = window.appliedEstimate || null;
+  const formData = new FormData();
 
-  const payload = {
-    name: document.getElementById('quote-name')?.value || '',
-    email: document.getElementById('quote-email')?.value || '',
-    phone: document.getElementById('quote-phone')?.value || '',
-    location: document.getElementById('quote-location')?.value || '',
-    type: preset?.type || null,
-    area: preset?.area || null,
-    floors: preset?.floors || null,
-    tier: preset?.tier || null,
-    extras: preset?.extras || [],
-    budget: document.getElementById('quote-budget')?.value || '',
-    notes: document.getElementById('quote-notes')?.value || '',
-  };
+  formData.append('name', document.getElementById('quote-name')?.value || '');
+  formData.append('email', document.getElementById('quote-email')?.value || '');
+  formData.append('phone', document.getElementById('quote-phone')?.value || '');
+  formData.append('location', document.getElementById('quote-location')?.value || '');
+  formData.append('type', preset?.type || document.getElementById('quote-type')?.value || '');
+  formData.append('area', preset?.area || '');
+  formData.append('floors', preset?.floors || '');
+  formData.append('tier', preset?.tier || '');
+  formData.append('budget', document.getElementById('quote-budget')?.value || '');
+  formData.append('notes', document.getElementById('quote-notes')?.value || '');
+
+  (preset?.extras || []).forEach((extra) => {
+    formData.append('extras[]', extra);
+  });
+
+  const attachments = document.getElementById('quote-attachments')?.files || [];
+
+  for (const file of attachments) {
+    formData.append('attachments[]', file);
+  }
 
   const submitBtn = e.target.querySelector('button[type="submit"]');
-  const originalLabel = submitBtn ? submitBtn.innerText : '';
+  const originalLabel = submitBtn?.innerText || '';
+
   if (submitBtn) {
     submitBtn.disabled = true;
     submitBtn.innerText = 'Submitting...';
@@ -134,34 +143,30 @@ async function submitQuoteForm(e) {
     const res = await fetch('/quote/submit', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'X-CSRF-TOKEN': getCsrfToken(),
       },
-      body: JSON.stringify(payload),
+      body: formData,
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Submission failed');
 
-    if (typeof showToast === 'function') {
-      showToast(data.message || 'Quote proposal request submitted successfully!');
-    } else {
-      alert(data.message || 'Quote proposal request submitted successfully!');
+    if (!res.ok) {
+      const errors = Object.values(data.errors || {})
+        .flat()
+        .join('\n');
+
+      throw new Error(errors || data.message || 'Submission failed');
     }
+
+    showToast?.(data.message || 'Quote request submitted successfully!');
 
     e.target.reset();
-    if (document.getElementById('quote-preset-alert')) {
-      document.getElementById('quote-preset-alert').style.display = 'none';
-    }
+    document.getElementById('quote-preset-alert')?.style.setProperty('display', 'none');
     window.appliedEstimate = null;
   } catch (err) {
     console.error('Quote submit error:', err);
-    if (typeof showToast === 'function') {
-      showToast('Something went wrong while submitting. Please try again.', 'error');
-    } else {
-      alert('Something went wrong while submitting. Please try again.');
-    }
+    showToast?.(err.message || 'Something went wrong while submitting.', 'error');
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
@@ -169,6 +174,7 @@ async function submitQuoteForm(e) {
     }
   }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('est-area')) runCalculateCost();

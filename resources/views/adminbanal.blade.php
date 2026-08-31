@@ -190,6 +190,7 @@
                 <th>Project Details</th>
                 <th>Budget</th>
                 <th>Status</th>
+                <th>Attachments</th>
                 <th>Date</th>
               </tr>
             </thead>

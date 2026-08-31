@@ -23,7 +23,45 @@ async function fetchAndRenderLeads() {
     if (typeof showToast === 'function') showToast('Could not load leads from the server.', 'error');
   }
 }
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  }[char]));
+}
 
+function formatFileSize(bytes) {
+  if (!bytes) return '0 B';
+
+  const units = ['B', 'KB', 'MB', 'GB'];
+  const index = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1
+  );
+
+  return `${(bytes / Math.pow(1024, index)).toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function renderLeadAttachments(attachments) {
+  if (!attachments?.length) {
+    return '<span class="text-muted small">No files</span>';
+  }
+
+  return attachments.map((attachment) => `
+    <a
+      href="${attachment.download_url}"
+      class="btn btn-sm btn-outline-primary mb-1 d-inline-flex align-items-center gap-1"
+      title="Download ${escapeHtml(attachment.name)}"
+    >
+      <i class="bi bi-download"></i>
+      <span>${escapeHtml(attachment.name)}</span>
+      <small>(${formatFileSize(attachment.size)})</small>
+    </a>
+  `).join('<br>');
+}
 function renderCRMLeadsFromApi(leads) {
   const tbody = document.getElementById('crm-leads-body');
   if (!tbody) return;
@@ -47,8 +85,9 @@ function renderCRMLeadsFromApi(leads) {
           <option value="converted" ${l.status === 'converted' ? 'selected' : ''}>Converted</option>
           <option value="rejected" ${l.status === 'rejected' ? 'selected' : ''}>Rejected</option>
         </select>
-      </td>
-      <td class="small text-muted">${l.date}</td>
+     </td>
+<td>${renderLeadAttachments(l.attachments)}</td>
+<td class="small text-muted">${l.date}</td>
     </tr>
   `).join('');
 }
