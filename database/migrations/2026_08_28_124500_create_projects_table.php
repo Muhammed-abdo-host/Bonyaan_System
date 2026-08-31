@@ -28,9 +28,9 @@ return new class extends Migration
             $table->unsignedInteger('progress_percent')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('budget')->nullable()->after('progress_percent');
-            $table->string('image')->nullable()->after('budget');
-            $table->text('description')->nullable()->after('image');
+            $table->string('budget')->nullable();
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -41,6 +41,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropColumn(['budget', 'image', 'description']);
+        });
     }
 };

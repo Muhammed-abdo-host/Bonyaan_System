@@ -180,6 +180,7 @@
     <script src="{{ asset('js/estimator.js') }}"></script>
 
     <script src="{{ asset('js/admin-leads.js') }}"></script>
+    <script src="{{ asset('js/admin-projects.js') }}"></script>
 </body>
 
 </html>

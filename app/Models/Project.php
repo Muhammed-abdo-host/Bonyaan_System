@@ -18,11 +18,11 @@ class project extends Model
         'floors',
         'status',
         'progress_percent',
-        'start_date',
-        'end_date',
         'budget',
         'image',
-        'description'
+        'description',
+        'start_date',
+        'end_date',
 
     ];
 

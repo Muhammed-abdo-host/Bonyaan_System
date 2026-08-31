@@ -90,6 +90,70 @@
           <i class="bi bi-plus-lg"></i> Add New Project
         </button>
       </div>
+      <!-- Add New Project Modal -->
+<div class="modal fade" id="addCMSModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="add-project-form" onsubmit="addProjectCMS(event)">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-met-navy">Add New Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Project Title</label>
+              <input type="text" id="cms-title" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Category</label>
+              <select id="cms-category" class="form-select" required>
+                <option value="villa">Villa</option>
+                <option value="office">Office</option>
+                <option value="mall">Mall</option>
+                <option value="warehouse">Warehouse</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Client</label>
+              <select id="cms-client" class="form-select" required>
+                <option value="">Loading clients...</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Location</label>
+              <input type="text" id="cms-location" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Area (sq.m)</label>
+              <input type="number" id="cms-area" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Budget</label>
+              <input type="text" id="cms-budget" class="form-control" placeholder="$1.2M">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Completion %</label>
+              <input type="number" id="cms-completion" class="form-control" min="0" max="100" value="0">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Image URL</label>
+              <input type="text" id="cms-image" class="form-control" placeholder="https://...">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Description</label>
+              <textarea id="cms-desc" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-met-gold fw-bold">Publish Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
       <div class="glass-card p-3">
         <div class="table-responsive">

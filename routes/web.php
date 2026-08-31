@@ -56,6 +56,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/leads', [\App\Http\Controllers\Admin\LeadAdminController::class, 'index'])->name('admin.leads.index');
         Route::patch('/leads/{lead}', [\App\Http\Controllers\Admin\LeadAdminController::class, 'update'])->name('admin.leads.update');
     });
+    Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('admin.projects.index');
+    Route::get('/clients', [\App\Http\Controllers\Admin\ProjectController::class, 'clients'])->name('admin.clients.index');
+    Route::post('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'store'])->name('admin.projects.store');
+    Route::patch('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'update'])->name('admin.projects.update');
+    Route::delete('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroy'])->name('admin.projects.destroy');
 });
 
 Route::post('/estimator/calculate', [EstimatorController::class, 'calculate'])->name('estimator.calculate');
