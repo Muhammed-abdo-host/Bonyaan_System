@@ -1,4 +1,4 @@
-@extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+@extends('components.layouts') 
 @section('content')
      <!-- ABOUT VIEW SECTION -->
   <section id="view-about" class="view-section active animated-fade py-5">
