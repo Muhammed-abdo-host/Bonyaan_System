@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EstimatorController;
 use App\Http\Controllers\ClientPortalController;
+use App\Http\Controllers\CareerController;
+
+
 
 Route::get('/', function () {
     return view('home');
@@ -37,6 +40,9 @@ Route::get('/quote', function () {
 Route::get('/blog', function () {
     return view('blog');
 });
+Route::get('/careers', function () {
+    return view('careers');
+})->name('careers');
 
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
@@ -64,7 +70,14 @@ Route::middleware(['auth'])->group(function () {
             '/attachments/{attachment}/download',
             [\App\Http\Controllers\Admin\LeadAdminController::class, 'downloadAttachment']
         )->name('admin.attachments.download');
+        Route::get('/hr/applicants', [\App\Http\Controllers\Admin\HrAdminController::class, 'index'])
+            ->name('admin.hr.index');
 
+        Route::patch('/hr/applicants/{applicant}', [\App\Http\Controllers\Admin\HrAdminController::class, 'update'])
+            ->name('admin.hr.update');
+
+        Route::get('/hr/applicants/{applicant}/cv', [\App\Http\Controllers\Admin\HrAdminController::class, 'downloadCv'])
+            ->name('admin.hr.cv.download');
 
         Route::get('/site-updates', [\App\Http\Controllers\Admin\SiteUpdateController::class, 'index'])
             ->name('admin.site-updates.index');
@@ -82,3 +95,6 @@ Route::post('/quote/submit', [EstimatorController::class, 'store'])->name('quote
 Route::post('/contact/submit', [\App\Http\Controllers\ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.submit');
+Route::post('/careers/apply', [CareerController::class, 'store'])
+    ->middleware('throttle:3,1')
+    ->name('careers.apply');

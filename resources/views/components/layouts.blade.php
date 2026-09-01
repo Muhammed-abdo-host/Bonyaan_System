@@ -58,6 +58,7 @@
                     <li class="nav-item"><a class="nav-link" href="/estimator">Cost Estimator</a></li>
                     <li class="nav-item"><a class="nav-link" href="/quote">Request Quote</a></li>
                     <li class="nav-item"><a class="nav-link" href="/blog">Blog & News</a></li>
+                    <a class="nav-link" href="{{ route('careers') }}">Careers</a>
                     <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                 </ul
                     <div class="d-flex align-items-center gap-2">
@@ -176,7 +177,9 @@
     <!-- JS DEPENDENCIES -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./app.js"></script>
+    <script src="{{ asset('app.js') }}"></script>
+
+
     <script src="{{ asset('js/contact.js') }}"></script>
     <script src="{{ asset('js/estimator.js') }}"></script>
 

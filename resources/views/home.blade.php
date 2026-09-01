@@ -17,11 +17,11 @@
               Over 24 years of engineering innovation, turnkey construction, and architectural mastery delivering iconic residential & commercial projects.
             </p>
             <div class="d-flex flex-wrap align-items-center gap-3">
-              <a class="btn btn-met-gold btn-lg d-flex align-items-center gap-2 shadow" href="estimator.html">
+              <a class="btn btn-met-gold btn-lg d-flex align-items-center gap-2 shadow" href="estimator">
                 <i class="bi bi-calculator-fill"></i>
                 <span>Calculate Construction Cost</span>
               </a>
-              <a class="btn btn-met-outline btn-lg d-flex align-items-center gap-2" href="projects.html">
+              <a class="btn btn-met-outline btn-lg d-flex align-items-center gap-2" href="projects">
                 <span>Explore Projects</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
@@ -55,7 +55,7 @@
                 <input type="range" class="form-range" min="100" max="5000" step="50" value="450" id="heroAreaSlider" oninput="document.getElementById('heroAreaLabel').innerText = this.value + ' m²'" />
               </div>
 
-              <a class="btn btn-met-gold w-100 py-2.5 fw-bold text-center text-decoration-none d-block" href="estimator.html">
+              <a class="btn btn-met-gold w-100 py-2.5 fw-bold text-center text-decoration-none d-block" href="estimator">
                 Calculate Full Budget Breakdown
               </a>
             </div>
@@ -133,7 +133,7 @@
               </div>
             </div>
 
-            <a class="btn btn-met-navy btn-lg text-white d-inline-flex align-items-center gap-2" href="about.html">
+            <a class="btn btn-met-navy btn-lg text-white d-inline-flex align-items-center gap-2" href="about">
               <span>Learn More About Us</span>
               <i class="bi bi-chevron-right"></i>
             </a>
@@ -157,7 +157,7 @@
               <div class="service-icon-box"><i class="bi bi-building"></i></div>
               <h5 class="fw-bold mb-3">General Contracting & Skeleton</h5>
               <p class="text-muted small mb-4">Heavy civil construction, concrete structures, steel framing, and commercial complexes.</p>
-              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services.html">
+              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services">
                 Explore Details <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -168,7 +168,7 @@
               <div class="service-icon-box"><i class="bi bi-paint-bucket"></i></div>
               <h5 class="fw-bold mb-3">Turnkey Interior & Exterior Finishes</h5>
               <p class="text-muted small mb-4">Luxury marble work, high-end cladding, smart lighting, and bespoke architectural finishing.</p>
-              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services.html">
+              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services">
                 Explore Details <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -179,7 +179,7 @@
               <div class="service-icon-box"><i class="bi bi-gear-wide-connected"></i></div>
               <h5 class="fw-bold mb-3">Engineering Supervision & MEP</h5>
               <p class="text-muted small mb-4">Strict quality assurance, HVAC, electrical grids, safety compliance, and site inspection.</p>
-              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services.html">
+              <a class="btn btn-link text-decoration-none text-gold p-0 fw-bold d-flex align-items-center gap-1" href="services">
                 Explore Details <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -196,7 +196,7 @@
             <span class="badge badge-gold mb-2">Projects</span>
             <h2 class="display-6 fw-bold text-met-navy m-0">Featured Masterpieces</h2>
           </div>
-          <a class="btn btn-outline-dark fw-bold text-decoration-none" href="projects.html">
+          <a class="btn btn-outline-dark fw-bold text-decoration-none" href="projects">
             View All Portfolio <i class="bi bi-arrow-right"></i>
           </a>
         </div>

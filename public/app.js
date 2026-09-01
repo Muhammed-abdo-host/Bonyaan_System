@@ -226,6 +226,9 @@ function setAdminSubView(subViewId) {
     } else {
       btn.className = "btn btn-sm btn-outline-secondary";
     }
+    if (view === 'hr') {
+    loadHrApplicants();
+}
   });
 
   if (subViewId === 'cms') renderCMSProjects();

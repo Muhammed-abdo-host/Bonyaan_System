@@ -440,4 +440,72 @@
         </div>
     </div>
 </section>
+<script>
+// ===== HR MODULE =====
+
+async function loadHrApplicants() {
+    const tbody = document.getElementById('hr-applicants-body');
+    const kpi   = document.getElementById('kpi-hr-count');
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Loading...</td></tr>';
+
+    try {
+        const res  = await fetch('/admin/hr/applicants');
+        const data = await res.json();
+
+        if (kpi) kpi.textContent = data.length;
+
+        if (!data.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No applicants yet.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = data.map(a => `
+            <tr>
+                <td class="text-muted small">#${a.id}</td>
+                <td>
+                    <div class="fw-bold">${a.name}</div>
+                    <div class="small text-muted">${a.email}</div>
+                    <div class="small text-muted">${a.phone}</div>
+                </td>
+                <td>${a.position}</td>
+                <td class="text-muted small">${a.date}</td>
+                <td>
+                    ${a.cv_url
+                        ? `<a href="${a.cv_url}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-download me-1"></i>CV</a>`
+                        : '<span class="text-muted small">No CV</span>'}
+                </td>
+                <td>
+                    <select class="form-select form-select-sm" onchange="updateApplicantStatus(${a.id}, this.value)" style="min-width:130px;">
+                        ${['new','reviewing','interview','hired','rejected'].map(s =>
+                            `<option value="${s}" ${a.status === s ? 'selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`
+                        ).join('')}
+                    </select>
+                </td>
+            </tr>
+        `).join('');
+
+    } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger py-4">Failed to load applicants.</td></tr>';
+    }
+}
+
+async function updateApplicantStatus(id, status) {
+    await fetch(`/admin/hr/applicants/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({ status }),
+    });
+}
+
+// تأكد إن loadHrApplicants بتتستدعى لما الـ HR tab يتفتح
+// لو عندك function زي setAdminSubView، أضف جواها:
+// if (view === 'hr') loadHrApplicants();
+// وكمان استدعيها في أول تحميل الصفحة لتحديث الـ KPI:
+document.addEventListener('DOMContentLoaded', () => {
+    loadHrApplicants();
+});
+</script>
 @endsection
