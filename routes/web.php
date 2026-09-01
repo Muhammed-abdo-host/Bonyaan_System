@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EstimatorController;
-
+use App\Http\Controllers\ClientPortalController;
 
 Route::get('/', function () {
     return view('home');
@@ -48,10 +48,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('admin.dashboard')
         ->middleware('can:access-admin');
 
-    Route::get('/client', fn() => view('client'))
+    Route::get('/client', [ClientPortalController::class, 'index'])
         ->name('client.portal')
         ->middleware('can:access-client');
-
     Route::prefix('admin')->middleware('can:access-admin')->group(function () {
         Route::get('/leads', [\App\Http\Controllers\Admin\LeadAdminController::class, 'index'])->name('admin.leads.index');
         Route::patch('/leads/{lead}', [\App\Http\Controllers\Admin\LeadAdminController::class, 'update'])->name('admin.leads.update');
@@ -65,6 +64,16 @@ Route::middleware(['auth'])->group(function () {
             '/attachments/{attachment}/download',
             [\App\Http\Controllers\Admin\LeadAdminController::class, 'downloadAttachment']
         )->name('admin.attachments.download');
+
+
+        Route::get('/site-updates', [\App\Http\Controllers\Admin\SiteUpdateController::class, 'index'])
+            ->name('admin.site-updates.index');
+
+        Route::post('/site-updates', [\App\Http\Controllers\Admin\SiteUpdateController::class, 'store'])
+            ->name('admin.site-updates.store');
+
+        Route::delete('/site-updates/{siteUpdate}', [\App\Http\Controllers\Admin\SiteUpdateController::class, 'destroy'])
+            ->name('admin.site-updates.destroy');
     });
 });
 
