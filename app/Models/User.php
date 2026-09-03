@@ -19,10 +19,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-    public function projects()
-    {
-        return $this->hasMany(project::class, 'client_id');
-    }
+   public function projects()
+{
+    return $this->hasMany(Project::class, 'client_id');   // كان project::class بحرف صغير
+}
 
     public function blogPosts()
     {
