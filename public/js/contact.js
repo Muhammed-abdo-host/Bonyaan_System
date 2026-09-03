@@ -5,13 +5,6 @@ function getCsrfToken() {
 window.submitContactForm = async function (event) {
   event.preventDefault();
 
-  const recaptcha = document.getElementById('contact-recaptcha');
-
-  if (!recaptcha?.checked) {
-    showToast?.('Please complete the verification checkbox.', 'error');
-    return;
-  }
-
   const form = event.target;
   const submitButton = form.querySelector('button[type="submit"]');
   const originalText = submitButton?.innerText || '';
@@ -22,6 +15,8 @@ window.submitContactForm = async function (event) {
   }
 
   try {
+    const recaptchaToken = await getRecaptchaToken('contact_submit');
+
     const response = await fetch('/contact/submit', {
       method: 'POST',
       headers: {
@@ -34,6 +29,7 @@ window.submitContactForm = async function (event) {
         email: document.getElementById('contact-email')?.value || '',
         subject: document.getElementById('contact-subject')?.value || '',
         message: document.getElementById('contact-message')?.value || '',
+        recaptcha_token: recaptchaToken,
       }),
     });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
+use App\Services\RecaptchaVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -51,7 +52,7 @@ class EstimatorController extends Controller
         return response()->json($this->computeEstimate($validated));
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, RecaptchaVerifier $recaptcha): JsonResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -71,10 +72,16 @@ class EstimatorController extends Controller
                 'file',
                 'mimes:pdf,dwg,zip',
                 'max:51200', // 50 MB لكل ملف
-
-                'recaptcha_token' => ['required', 'string']
             ],
+
+            'recaptcha_token' => ['required', 'string'],
         ]);
+
+        if (! $recaptcha->verify($request->input('recaptcha_token'), 'quote_submit')) {
+            return response()->json([
+                'message' => 'فشل التحقق الأمني، من فضلك أعد المحاولة.',
+            ], 422);
+        }
 
         $estimate = null;
 

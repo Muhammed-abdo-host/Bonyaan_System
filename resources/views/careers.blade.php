@@ -84,6 +84,14 @@
                             </div>
 
                             <div class="col-12 text-center mt-2">
+                                <p class="text-xs text-muted mb-2" style="font-size: 0.75rem;">
+                                    This site is protected by reCAPTCHA and the Google
+                                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+                                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.
+                                </p>
+                            </div>
+
+                            <div class="col-12 text-center mt-2">
                                 <button type="submit" class="btn btn-met-navy text-white btn-lg px-5 fw-bold" id="career-submit-btn">
                                     <i class="bi bi-send me-2"></i> Submit Application
                                 </button>
@@ -113,6 +121,9 @@ async function submitCareerForm(e) {
     formData.append('cv',       document.getElementById('career-cv').files[0]);
 
     try {
+        const recaptchaToken = await getRecaptchaToken('career_submit');
+        formData.append('recaptcha_token', recaptchaToken || '');
+
         const res = await fetch('/careers/apply', {
             method: 'POST',
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },

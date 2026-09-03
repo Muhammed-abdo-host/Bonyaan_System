@@ -105,17 +105,12 @@
                                 ></textarea>
                             </div>
 
-                            <div class="col-12 d-flex justify-content-center">
-                                <div class="form-check p-3 bg-light rounded-3 border d-inline-flex align-items-center gap-2">
-                                    <input
-                                        class="form-check-input m-0"
-                                        type="checkbox"
-                                        id="contact-recaptcha"
-                                    >
-                                    <label class="form-check-label small m-0" for="contact-recaptcha">
-                                        I verify that I am sending a legitimate inquiry.
-                                    </label>
-                                </div>
+                            <div class="col-12 text-center">
+                                <p class="text-xs text-muted mb-0" style="font-size: 0.75rem;">
+                                    This site is protected by reCAPTCHA and the Google
+                                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+                                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.
+                                </p>
                             </div>
 
                             <div class="col-12 text-center">

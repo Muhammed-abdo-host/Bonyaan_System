@@ -20,6 +20,16 @@
 
     <!-- Custom Styling System -->
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+    @if(config('services.recaptcha.site_key'))
+        <script>
+            window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+        <style>
+            .grecaptcha-badge { visibility: hidden; }
+        </style>
+    @endif
 </head>
 
 <body>
@@ -179,7 +189,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('app.js') }}"></script>
 
-
+    <script src="{{ asset('js/recaptcha-helper.js') }}"></script>
     <script src="{{ asset('js/contact.js') }}"></script>
     <script src="{{ asset('js/estimator.js') }}"></script>
 

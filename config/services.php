@@ -34,14 +34,16 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
     'bonyaan' => [
         'quote_notification_email' => env('QUOTE_NOTIFICATION_EMAIL'),
         'contact_notification_email' => env('CONTACT_NOTIFICATION_EMAIL'),
     ],
+
     'recaptcha' => [
-    'site_key' => env('RECAPTCHA_SITE_KEY'),
-    'secret_key' => env('RECAPTCHA_SECRET_KEY'),
-    'min_score' => env('RECAPTCHA_MIN_SCORE', 0.5),
-],
+        'site_key' => env('RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+        'min_score' => env('RECAPTCHA_MIN_SCORE', 0.5),
+    ],
 
 ];

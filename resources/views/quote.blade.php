@@ -79,13 +79,12 @@
                 <textarea id="quote-notes" class="form-control" rows="4" placeholder="Mention any specific finishing preferences, site access constraints, or timelines..."></textarea>
               </div>
 
-              <div class="col-12 my-3">
-                <div class="form-check p-3 bg-light rounded-3 border">
-                  <input class="form-check-input" type="checkbox" id="quote-recaptcha">
-                  <label class="form-check-label small" for="quote-recaptcha">
-                    I am not a robot (Protected by reCAPTCHA v3)
-                  </label>
-                </div>
+              <div class="col-12 text-center my-3">
+                <p class="text-xs text-muted mb-0" style="font-size: 0.75rem;">
+                  This site is protected by reCAPTCHA and the Google
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.
+                </p>
               </div>
 
               <div class="col-12">

@@ -97,15 +97,9 @@ function checkQuotePreset() {
     console.error('Could not parse saved estimate:', err);
   }
 }
+
 async function submitQuoteForm(e) {
   e.preventDefault();
-
-  const recaptcha = document.getElementById('quote-recaptcha');
-
-  if (recaptcha && !recaptcha.checked) {
-    alert('Please check the reCAPTCHA verification box.');
-    return;
-  }
 
   const preset = window.appliedEstimate || null;
   const formData = new FormData();
@@ -140,6 +134,9 @@ async function submitQuoteForm(e) {
   }
 
   try {
+    const recaptchaToken = await getRecaptchaToken('quote_submit');
+    formData.append('recaptcha_token', recaptchaToken || '');
+
     const res = await fetch('/quote/submit', {
       method: 'POST',
       headers: {

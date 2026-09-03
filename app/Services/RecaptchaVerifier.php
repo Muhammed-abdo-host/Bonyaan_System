@@ -12,7 +12,7 @@ class RecaptchaVerifier
 
     public function __construct()
     {
-        $this->secretKey = config('services.recaptcha.secret_key');
+        $this->secretKey = (string) config('services.recaptcha.secret_key');
         $this->minScore = (float) config('services.recaptcha.min_score', 0.5);
     }
 
@@ -27,7 +27,7 @@ class RecaptchaVerifier
         }
 
         if (empty($this->secretKey)) {
-            // لو المفاتيح مش متظبطة، نمنع فشل السيرفر بالكامل بس نسجل تحذير
+            // لو المفاتيح مش متظبطة، منمنعش فشل السيرفر بالكامل بس نسجل تحذير
             Log::warning('reCAPTCHA secret key is not configured.');
             return true;
         }
