@@ -36,73 +36,85 @@
 
 <body>
 
-    <!-- Top Header Contact Bar -->
+       <!-- Top Header Contact Bar -->
     <div class="top-header py-2 d-none d-md-block">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-4">
-                <span><i class="bi bi-telephone-fill text-gold me-1"></i> Call Us: +6048 2722 4400</span>
-                <span><i class="bi bi-envelope-fill text-gold me-1"></i> Bonyaan@gmail.com</span>
+        <div class="container-fluid px-lg-5 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-4 text-white-50 small">
+                <span><i class="bi bi-telephone-fill text-gold me-1"></i> +6048 2722 4400</span>
+                <span><i class="bi bi-envelope-fill text-gold me-1"></i> info@bonyaan.com</span>
+                <span><i class="bi bi-geo-alt-fill text-gold me-1"></i> Riyadh • Dubai</span>
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-met-navy-light text-gold border border-warning" id="current-role-badge">General Manager</span>
+                @auth
+                    <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
+                        <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
+                    </span>
+                @else
+                    <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
+                @endauth
             </div>
         </div>
     </div>
 
     <!-- Primary Navigation Bar -->
-    <!-- Primary Navigation Bar -->
-    <nav class="navbar navbar-expand-lg sticky-top met-navbar">
-        <div class="container">
-            <a class="met-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
-                <span class="fs-4 fw-bold text-white">Bonyaan</span>
+    <nav class="navbar navbar-expand-lg sticky-top met-navbar py-2.5">
+        <div class="container-fluid px-lg-5">
+            <!-- Brand Logo -->
+            <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
+                <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 36px; height: 36px;">
+                    <i class="bi bi-buildings-fill text-gold fs-5"></i>
+                </div>
+                <span class="fs-4 fw-bold text-white tracking-wide">Bonyaan</span>
             </a>
 
-            <button class="navbar-toggler text-white border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <!-- Mobile Toggler -->
+            <button class="navbar-toggler text-white border-secondary p-1.5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Navigation Links -->
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
-                    <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('projects') ? 'active' : '' }}" href="{{ url('/projects') }}">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('estimator') ? 'active' : '' }}" href="{{ url('/estimator') }}">Cost Estimator</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('quote') ? 'active' : '' }}" href="{{ url('/quote') }}">Request Quote</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="{{ url('/blog') }}">Blog & News</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('careers') ? 'active' : '' }}" href="{{ route('careers') }}">Careers</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact</a></li>
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-0 gap-xl-1" style="white-space: nowrap;">
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('projects') ? 'active' : '' }}" href="{{ url('/projects') }}">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('estimator') ? 'active' : '' }}" href="{{ url('/estimator') }}">Estimator</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('quote') ? 'active' : '' }}" href="{{ url('/quote') }}">Quote</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('blog') ? 'active' : '' }}" href="{{ url('/blog') }}">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->routeIs('careers') ? 'active' : '' }}" href="{{ route('careers') }}">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact</a></li>
                 </ul>
 
-                <div class="d-flex align-items-center gap-2">
+                <!-- Auth Buttons Right -->
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0" style="white-space: nowrap;">
                     @auth
-                    @if(auth()->user()->role?->name === 'admin')
-                    <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="{{ route('admin.dashboard') }}">
-                        <i class="bi bi-speedometer2"></i> Admin Panel
-                    </a>
-                    @elseif(auth()->user()->role?->name === 'client')
-                    <a class="btn btn-sm btn-outline-warning text-white me-2" href="{{ route('client.portal') }}">
-                        <i class="bi bi-person-workspace"></i> Client Portal
-                    </a>
-                    @endif
+                        @if(auth()->user()->role?->name === 'admin')
+                            <a class="btn btn-met-gold btn-sm px-3 fw-bold d-inline-flex align-items-center gap-1.5" href="{{ route('admin.dashboard') }}">
+                                <i class="bi bi-speedometer2"></i> <span>Dashboard</span>
+                            </a>
+                        @elseif(auth()->user()->role?->name === 'client')
+                            <a class="btn btn-sm btn-outline-warning text-white px-3 d-inline-flex align-items-center gap-1.5" href="{{ route('client.portal') }}">
+                                <i class="bi bi-person-workspace"></i> <span>Portal</span>
+                            </a>
+                        @endif
 
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-outline-light d-flex align-items-center gap-1" title="Logout">
-                            <i class="bi bi-box-arrow-right"></i> Logout ({{ Str::words(auth()->user()->name, 1, '') }})
-                        </button>
-                    </form>
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-light px-2.5 py-1.5 d-inline-flex align-items-center gap-1" title="Sign out">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </button>
+                        </form>
                     @else
-                    <a class="btn btn-sm btn-outline-light" href="{{ route('login') }}">
-                        <i class="bi bi-box-arrow-in-right"></i> Login
-                    </a>
+                        <a class="btn btn-sm btn-outline-light px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" href="{{ route('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i> <span>Login</span>
+                        </a>
                     @endauth
                 </div>
             </div>
         </div>
     </nav>
-
     @yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
