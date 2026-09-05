@@ -37,9 +37,9 @@ Route::get('/quote', function () {
     return view('quote');
 });
 
-Route::get('/blog', function () {
-    return view('blog');
-});
+Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{post:slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+
 Route::get('/careers', function () {
     return view('careers');
 })->name('careers');
@@ -93,6 +93,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::patch('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageAdminController::class, 'update'])
             ->name('admin.messages.update');
+        Route::get('/blog', [\App\Http\Controllers\Admin\BlogController::class, 'index'])->name('admin.blog.index');
+        Route::post('/blog', [\App\Http\Controllers\Admin\BlogController::class, 'store'])->name('admin.blog.store');
+        Route::patch('/blog/{post}', [\App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blog.update');
+        Route::delete('/blog/{post}', [\App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blog.destroy');
     });
 });
 

@@ -135,6 +135,7 @@ function setAdminSubView(subViewId) {
   if (subViewId === 'site') renderSiteManager();
   if (subViewId === 'hr' && typeof loadHrApplicants === 'function') loadHrApplicants();
   if (subViewId === 'messages' && typeof fetchAndRenderMessages === 'function') fetchAndRenderMessages();
+  if (subViewId === 'blog' && typeof fetchAndRenderBlogPosts === 'function') fetchAndRenderBlogPosts();
 }
 
 // Role Context Switcher

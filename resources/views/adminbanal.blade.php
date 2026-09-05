@@ -18,6 +18,7 @@
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('site')">Site Tracker</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('hr')">HR & Jobs</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('messages')">Contact Messages</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('blog')">Blog & News</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('roles')">RBAC Roles</button>
             </div>
         </div>
@@ -230,6 +231,88 @@
                 </div>
             </div>
         </div>
+        <div id="admin-blog" class="subview-section">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold text-met-navy m-0">Blog & News Manager</h4>
+
+        <button
+            type="button"
+            class="btn btn-met-gold btn-sm fw-bold"
+            onclick="toggleBlogPostForm()"
+        >
+            <i class="bi bi-plus-lg"></i>
+            Add New Article
+        </button>
+    </div>
+
+    <div id="addBlogPostPanel" class="glass-card p-4 mb-4 d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="fw-bold text-met-navy m-0">Add New Article</h5>
+
+            <button
+                type="button"
+                class="btn-close"
+                aria-label="Close"
+                onclick="toggleBlogPostForm(false)"
+            ></button>
+        </div>
+
+        <form id="add-blog-form" onsubmit="addBlogPost(event)">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label class="form-label small fw-bold" for="blog-title">Title</label>
+                    <input type="text" id="blog-title" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold" for="blog-category">Category</label>
+                    <input type="text" id="blog-category" class="form-control" placeholder="Engineering">
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label small fw-bold" for="blog-image">Cover Image URL</label>
+                    <input type="text" id="blog-image" class="form-control" placeholder="https://...">
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label small fw-bold" for="blog-excerpt">Excerpt (short summary)</label>
+                    <input type="text" id="blog-excerpt" class="form-control" maxlength="500">
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label small fw-bold" for="blog-content">Content</label>
+                    <textarea id="blog-content" class="form-control" rows="6" required></textarea>
+                </div>
+
+                <div class="col-12 form-check ps-4">
+                    <input type="checkbox" class="form-check-input" id="blog-published" checked>
+                    <label class="form-check-label small fw-bold" for="blog-published">Publish immediately</label>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-met-gold fw-bold w-100">Save Article</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="blog-posts-body"></tbody>
+        </table>
+    </div>
+</div>
 
         <div id="admin-crm" class="subview-section">
             <h4 class="fw-bold text-met-navy mb-3">CRM & Proposal Inquiries Manager</h4>
