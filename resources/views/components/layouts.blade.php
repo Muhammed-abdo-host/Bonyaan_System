@@ -196,6 +196,7 @@
     <script src="{{ asset('js/admin-leads.js') }}"></script>
     <script src="{{ asset('js/admin-projects.js') }}"></script>
     <script src="{{ asset('js/admin-site-updates.js') }}"></script>
+    <script src="{{ asset('js/admin-messages.js') }}"></script>
 </body>
 
 </html>

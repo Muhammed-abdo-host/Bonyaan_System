@@ -17,13 +17,14 @@
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('crm')">CRM Leads</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('site')">Site Tracker</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('hr')">HR & Jobs</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('messages')">Contact Messages</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('roles')">RBAC Roles</button>
             </div>
         </div>
 
         <div id="admin-overview" class="subview-section active">
             <div class="row g-4 mb-4">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -37,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -51,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -60,6 +61,20 @@
                             </div>
                             <div class="bg-success text-white rounded-3 p-3 fs-3">
                                 <i class="bi bi-people"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="glass-card p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="small text-muted">New Contact Messages</div>
+                                <h2 class="display-6 fw-bold text-met-navy m-0" id="kpi-messages-count">0</h2>
+                            </div>
+                            <div class="bg-info text-white rounded-3 p-3 fs-3">
+                                <i class="bi bi-envelope-fill"></i>
                             </div>
                         </div>
                     </div>
@@ -173,11 +188,11 @@
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label small fw-bold" for="cms-desc">Description</label>
-                            <textarea id="cms-desc" class="form-control" rows="3"></textarea>
+                            <label class="form-label small fw-bold" for="cms-description">Description</label>
+                            <textarea id="cms-description" class="form-control" rows="3"></textarea>
                         </div>
 
-                        <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                        <div class="col-12 d-flex justify-content-end gap-2">
                             <button
                                 type="button"
                                 class="btn btn-outline-secondary"
@@ -187,7 +202,7 @@
                             </button>
 
                             <button type="submit" class="btn btn-met-gold fw-bold">
-                                Publish Project
+                                Save Project
                             </button>
                         </div>
                     </div>
@@ -200,12 +215,13 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Project Title & Location</th>
-                                <th>Category</th>
+                                <th>Project</th>
                                 <th>Client</th>
-                                <th>Progress</th>
+                                <th>Location</th>
+                                <th>Area</th>
                                 <th>Budget</th>
-                                <th>Action</th>
+                                <th>Completion</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
 
@@ -267,10 +283,10 @@
                     ></button>
                 </div>
 
-                <form id="add-site-update-form" onsubmit="publishSiteUpdate(event)">
+                <form id="add-site-update-form" onsubmit="addSiteUpdate(event)">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold" for="site-project">Project</label>
+                            <label class="form-label small fw-bold" for="site-project">Project</label>
 
                             <select id="site-project" class="form-select" required>
                                 <option value="">Loading projects...</option>
@@ -278,59 +294,21 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold" for="site-phase">
-                                Construction Phase
-                            </label>
-
-                            <select id="site-phase" class="form-select" required>
-                                <option value="excavation">Excavation</option>
-                                <option value="structure">Structure</option>
-                                <option value="mep">MEP</option>
-                                <option value="finishing">Finishing</option>
-                            </select>
+                            <label class="form-label small fw-bold" for="site-title">Update Title</label>
+                            <input type="text" id="site-title" class="form-control" required>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label fw-bold" for="site-title">Update Title</label>
-
-                            <input
-                                type="text"
-                                id="site-title"
-                                class="form-control"
-                                required
-                                placeholder="Example: Ground-floor concrete pouring completed"
-                            >
+                            <label class="form-label small fw-bold" for="site-image">Photo URL</label>
+                            <input type="url" id="site-image" class="form-control" placeholder="https://...">
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label fw-bold" for="site-description">
-                                Description
-                            </label>
-
-                            <textarea
-                                id="site-description"
-                                class="form-control"
-                                rows="4"
-                                placeholder="Describe the work completed, next steps, and any important notes..."
-                            ></textarea>
+                            <label class="form-label small fw-bold" for="site-notes">Inspection Notes</label>
+                            <textarea id="site-notes" class="form-control" rows="3"></textarea>
                         </div>
 
-                        <div class="col-12">
-                            <label class="form-label fw-bold" for="site-image">Site Photo</label>
-
-                            <input
-                                type="file"
-                                id="site-image"
-                                class="form-control"
-                                accept=".jpg,.jpeg,.png,.webp"
-                            >
-
-                            <div class="form-text">
-                                Optional. JPG, JPEG, PNG, or WEBP — maximum 5 MB.
-                            </div>
-                        </div>
-
-                        <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                        <div class="col-12 d-flex justify-content-end gap-2">
                             <button
                                 type="button"
                                 class="btn btn-outline-secondary"
@@ -380,6 +358,29 @@
                         </thead>
 
                         <tbody id="hr-applicants-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="admin-messages" class="subview-section">
+            <h4 class="fw-bold text-met-navy mb-3">Contact Messages</h4>
+
+            <div class="glass-card p-3">
+                <div class="table-responsive">
+                    <table class="table custom-table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Sender</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="messages-body"></tbody>
                     </table>
                 </div>
             </div>
@@ -435,6 +436,37 @@
                             <span class="small text-muted">Client Portal Workspace Only</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Message Detail Modal -->
+    <div class="modal fade" id="contactMessageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content glass-card p-0 border-0 overflow-hidden">
+                <div class="modal-header bg-met-navy text-white">
+                    <h5 class="modal-title fw-bold" id="cm-modal-subject">Message Subject</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="small text-muted">From</div>
+                            <div class="fw-bold text-met-navy" id="cm-modal-from">-</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="small text-muted">Received</div>
+                            <div class="fw-semibold" id="cm-modal-date">-</div>
+                        </div>
+                    </div>
+
+                    <span class="badge bg-secondary mb-3" id="cm-modal-status-badge">new</span>
+
+                    <p class="text-secondary" id="cm-modal-body" style="white-space: pre-wrap;"></p>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

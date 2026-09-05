@@ -87,6 +87,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::delete('/site-updates/{siteUpdate}', [\App\Http\Controllers\Admin\SiteUpdateController::class, 'destroy'])
             ->name('admin.site-updates.destroy');
+
+        Route::get('/messages', [\App\Http\Controllers\Admin\ContactMessageAdminController::class, 'index'])
+            ->name('admin.messages.index');
+
+        Route::patch('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageAdminController::class, 'update'])
+            ->name('admin.messages.update');
     });
 });
 
