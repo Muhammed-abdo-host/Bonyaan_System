@@ -22,13 +22,15 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
     @if(config('services.recaptcha.site_key'))
-        <script>
-            window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
-        </script>
-        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
-        <style>
-            .grecaptcha-badge { visibility: hidden; }
-        </style>
+    <script>
+        window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
     @endif
 </head>
 
@@ -49,10 +51,11 @@
     </div>
 
     <!-- Primary Navigation Bar -->
+    <!-- Primary Navigation Bar -->
     <nav class="navbar navbar-expand-lg sticky-top met-navbar">
         <div class="container">
-            <a class="met-brand d-flex align-items-center gap-2" href="index.html">
-
+            <a class="met-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
+                <span class="fs-4 fw-bold text-white">Bonyaan</span>
             </a>
 
             <button class="navbar-toggler text-white border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
@@ -61,25 +64,42 @@
 
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/estimator">Cost Estimator</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/quote">Request Quote</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/blog">Blog & News</a></li>
-                    <a class="nav-link" href="{{ route('careers') }}">Careers</a>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                </ul
-                    <div class="d-flex align-items-center gap-2">
-                <a class="btn btn-sm btn-outline-warning text-white me-2" href="/client">
-                    <i class="bi bi-person-workspace"></i> Client Portal
-                </a>
-                <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="/adminbanal">
-                    <i class="bi bi-speedometer2"></i> Admin Panel
-                </a>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('projects') ? 'active' : '' }}" href="{{ url('/projects') }}">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('estimator') ? 'active' : '' }}" href="{{ url('/estimator') }}">Cost Estimator</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('quote') ? 'active' : '' }}" href="{{ url('/quote') }}">Request Quote</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="{{ url('/blog') }}">Blog & News</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('careers') ? 'active' : '' }}" href="{{ route('careers') }}">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    @auth
+                    @if(auth()->user()->role?->name === 'admin')
+                    <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="{{ route('admin.dashboard') }}">
+                        <i class="bi bi-speedometer2"></i> Admin Panel
+                    </a>
+                    @elseif(auth()->user()->role?->name === 'client')
+                    <a class="btn btn-sm btn-outline-warning text-white me-2" href="{{ route('client.portal') }}">
+                        <i class="bi bi-person-workspace"></i> Client Portal
+                    </a>
+                    @endif
+
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-light d-flex align-items-center gap-1" title="Logout">
+                            <i class="bi bi-box-arrow-right"></i> Logout ({{ Str::words(auth()->user()->name, 1, '') }})
+                        </button>
+                    </form>
+                    @else
+                    <a class="btn btn-sm btn-outline-light" href="{{ route('login') }}">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                    @endauth
+                </div>
             </div>
-        </div>
         </div>
     </nav>
 
@@ -106,20 +126,20 @@
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Quick Links</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="index.html">Home</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="about.html">About Us</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="services.html">Services</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="projects.html">Projects</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/') }}">Home</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/about') }}">About Us</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/services') }}">Services</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/projects') }}">Projects</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Tools & Systems</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="estimator.html">Cost Estimator</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="quote.html">Request Quote</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="client.html">Client Portal</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="admin.html">Admin Dashboard</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/client') }}">Client Portal</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
                     </ul>
                 </div>
 
@@ -175,7 +195,7 @@
                 </div>
                 <div class="modal-footer bg-light">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a class="btn btn-met-gold" href="quote.html">Request Similar Project</a>
+                    <a class="btn btn-met-gold" href="{{ url('/quote') }}">Request Similar Project</a>
                 </div>
             </div>
         </div>
