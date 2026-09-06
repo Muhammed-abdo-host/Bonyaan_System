@@ -221,7 +221,7 @@
     <script src="{{ asset('app.js') }}"></script>
 
     <script src="{{ asset('js/recaptcha-helper.js') }}"></script>
-    <script src="{{ asset('js/contact.js') }}</li>"></script> <!-- Fixed malformed tag if any, though block is clean -->
+    <script src="{{ asset('js/contact.js') }}"></script>
     <script src="{{ asset('js/estimator.js') }}"></script>
 
     <script src="{{ asset('js/admin-leads.js') }}"></script>
@@ -231,4 +231,4 @@
     <script src="{{ asset('js/admin-blog.js') }}"></script>
 </body>
 
-</html>
+~

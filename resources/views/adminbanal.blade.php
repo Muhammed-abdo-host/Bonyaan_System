@@ -3,7 +3,7 @@
 @section('content')
 <section id="view-admin" class="view-section active animated-fade py-5">
     <div class="container py-4">
-               <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
             <div>
                 <span class="badge badge-gold mb-2">Admin Dashboard</span>
                 <h1 class="display-6 fw-bold text-met-navy m-0">
@@ -11,78 +11,17 @@
                 </h1>
             </div>
 
-            <!-- Responsive Tabs Bar (Wraps smoothly on mobile) -->
-            <div class="d-flex flex-wrap gap-2" id="admin-pills">
-                <button class="btn btn-sm btn-met-navy text-white rounded-2" onclick="setAdminSubView('overview')">Overview</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('cms')">CMS Portfolio</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('crm')">CRM Leads</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('site')">Site Tracker</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('hr')">HR & Jobs</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('messages')">Contact Messages</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('blog')">Blog & News</button>
-                <button class="btn btn-sm btn-outline-secondary rounded-2" onclick="setAdminSubView('roles')">RBAC Roles</button>
+            <div class="btn-group" id="admin-pills">
+                <button class="btn btn-sm btn-met-navy text-white" onclick="setAdminSubView('overview')">Overview</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('cms')">CMS Portfolio</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('crm')">CRM Leads</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('site')">Site Tracker</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('hr')">HR & Jobs</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('messages')">Contact Messages</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('blog')">Blog & News</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('roles')">RBAC Roles</button>
             </div>
         </div>
-
-        <div id="admin-overview" class="subview-section active">
-            <!-- 2x2 KPIs Grid on mobile and tablet, 4 in a row on desktop -->
-            <div class="row g-3 g-md-4 mb-4">
-                <div class="col-6 col-lg-3">
-                    <div class="glass-card p-3 p-sm-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="small text-muted" style="font-size: 0.8rem;">Active Quotes</div>
-                                <h2 class="display-6 fw-bold text-met-navy m-0" id="kpi-leads-count">0</h2>
-                            </div>
-                            <div class="bg-primary text-white rounded-3 p-2 p-sm-3 fs-4 fs-sm-3">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="glass-card p-3 p-sm-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="small text-muted" style="font-size: 0.8rem;">Active Sites</div>
-                                <h2 class="display-6 fw-bold text-met-navy m-0" id="kpi-sites-count">0</h2>
-                            </div>
-                            <div class="bg-warning text-dark rounded-3 p-2 p-sm-3 fs-4 fs-sm-3">
-                                <i class="bi bi-building"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="glass-card p-3 p-sm-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="small text-muted" style="font-size: 0.8rem;">Applicants</div>
-                                <h2 class="display-6 fw-bold text-met-navy m-0" id="kpi-hr-count">0</h2>
-                            </div>
-                            <div class="bg-success text-white rounded-3 p-2 p-sm-3 fs-4 fs-sm-3">
-                                <i class="bi bi-people"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="glass-card p-3 p-sm-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="small text-muted" style="font-size: 0.8rem;">Messages</div>
-                                <h2 class="display-6 fw-bold text-met-navy m-0" id="kpi-messages-count">0</h2>
-                            </div>
-                            <div class="bg-info text-white rounded-3 p-2 p-sm-3 fs-4 fs-sm-3">
-                                <i class="bi bi-envelope-fill"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         <div id="admin-overview" class="subview-section active">
             <div class="row g-4 mb-4">
