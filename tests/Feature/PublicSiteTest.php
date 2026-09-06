@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class PublicSiteTest extends TestCase
 {
+    use RefreshDatabase;
     #[DataProvider('publicPageUrls')]
     public function test_public_pages_are_available(string $url): void
     {

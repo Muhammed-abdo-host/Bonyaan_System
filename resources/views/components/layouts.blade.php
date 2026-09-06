@@ -22,22 +22,29 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
     @if(config('services.recaptcha.site_key'))
-        <script>
-            window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
-        </script>
-        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
-        <style>
-            .grecaptcha-badge { visibility: hidden; }
-        </style>
+    <script>
+        window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
     @endif
 </head>
 
 <body>
 
-    <!-- Top Header Contact Bar -->
+       <!-- Top Header Contact Bar -->
     <div class="top-header py-2 d-none d-md-block">
+<<<<<<< HEAD
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-4">
+=======
+        <div class="container-fluid px-lg-5 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-4 text-white-50 small">
+>>>>>>> 7f23f2572c724501c3b7e8f3e5ae4c548d48cedf
                 <span><i class="bi bi-telephone-fill text-gold me-1"></i> +6048 2722 4400</span>
                 <span><i class="bi bi-envelope-fill text-gold me-1"></i> info@bonyaan.com</span>
                 <span><i class="bi bi-geo-alt-fill text-gold me-1"></i> Riyadh • Dubai</span>
@@ -56,7 +63,11 @@
     </div>
 
     <!-- Primary Navigation Bar -->
+<<<<<<< HEAD
      <nav class="navbar navbar-expand-lg sticky-top met-navbar py-2.5">
+=======
+    <nav class="navbar navbar-expand-lg sticky-top met-navbar py-2.5">
+>>>>>>> 7f23f2572c724501c3b7e8f3e5ae4c548d48cedf
         <div class="container-fluid px-lg-5">
             <!-- Brand Logo -->
             <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
@@ -113,7 +124,6 @@
             </div>
         </div>
     </nav>
-
     @yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
@@ -137,20 +147,20 @@
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Quick Links</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="index.html">Home</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="about.html">About Us</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="services.html">Services</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="projects.html">Projects</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/') }}">Home</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/about') }}">About Us</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/services') }}">Services</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/projects') }}">Projects</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Tools & Systems</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="estimator.html">Cost Estimator</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="quote.html">Request Quote</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="client.html">Client Portal</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="admin.html">Admin Dashboard</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/client') }}">Client Portal</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
                     </ul>
                 </div>
 
@@ -206,7 +216,7 @@
                 </div>
                 <div class="modal-footer bg-light">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a class="btn btn-met-gold" href="quote.html">Request Similar Project</a>
+                    <a class="btn btn-met-gold" href="{{ url('/quote') }}">Request Similar Project</a>
                 </div>
             </div>
         </div>
