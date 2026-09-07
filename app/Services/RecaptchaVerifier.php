@@ -20,19 +20,25 @@ class RecaptchaVerifier
      * @param string|null $token
      * @param string $expectedAction  e.g. 'contact_submit', 'quote_submit', 'career_submit'
      */
+
+    public function isConfigured(): bool
+    {
+        return $this->secretKey !== '';
+    }
     public function verify(?string $token, string $expectedAction): bool
     {
-        if (empty($token)) {
-            return false;
-        }
-
         if (empty($this->secretKey)) {
             // لو المفاتيح مش متظبطة، منمنعش فشل السيرفر بالكامل بس نسجل تحذير
             Log::warning('reCAPTCHA secret key is not configured.');
             return true;
         }
 
+        if (empty($token)) {
+            return false;
+        }
+
         try {
+            // ... باقي الكود زي ما هو من غير تغيير
             $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret' => $this->secretKey,
                 'response' => $token,

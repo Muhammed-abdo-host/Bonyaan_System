@@ -19,7 +19,7 @@ class ContactController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
-            'recaptcha_token' => ['required', 'string'],
+            'recaptcha_token' => [$recaptcha->isConfigured() ? 'required' : 'nullable', 'string'],
         ]);
 
         if (! $recaptcha->verify($request->input('recaptcha_token'), 'contact_submit')) {
@@ -35,12 +35,14 @@ class ContactController extends Controller
             'message' => $validated['message'],
         ]);
 
-        Mail::to($contactMessage->email)
-            ->send(new ContactConfirmation($contactMessage));
+      try {
+    Mail::to($lead->email)->send(new QuoteConfirmation($lead));
 
-        Mail::to(config('services.bonyaan.contact_notification_email'))
-            ->send(new NewContactNotification($contactMessage));
-
+    Mail::to(config('services.bonyaan.quote_notification_email'))
+        ->send(new NewQuoteNotification($lead));
+} catch (\Throwable $e) {
+    \Illuminate\Support\Facades\Log::error('Failed to send quote emails: ' . $e->getMessage());
+}
         return response()->json([
             'message' => 'Your message has been sent successfully. Our team will contact you shortly.',
             'contact_message_id' => $contactMessage->id,
