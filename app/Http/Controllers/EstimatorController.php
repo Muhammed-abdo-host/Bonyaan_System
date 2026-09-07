@@ -74,7 +74,7 @@ class EstimatorController extends Controller
                 'max:51200', // 50 MB لكل ملف
             ],
 
-            'recaptcha_token' => ['required', 'string'],
+            'recaptcha_token' => [$recaptcha->isConfigured() ? 'required' : 'nullable', 'string'],
         ]);
 
         if (! $recaptcha->verify($request->input('recaptcha_token'), 'quote_submit')) {
@@ -124,10 +124,14 @@ class EstimatorController extends Controller
             ]);
         }
 
-        Mail::to($lead->email)->send(new QuoteConfirmation($lead));
+        try {
+            Mail::to($lead->email)->send(new QuoteConfirmation($lead));
 
-        Mail::to(config('services.bonyaan.quote_notification_email'))
-            ->send(new NewQuoteNotification($lead));
+            Mail::to(config('services.bonyaan.quote_notification_email'))
+                ->send(new NewQuoteNotification($lead));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send quote emails: ' . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Quote proposal request submitted successfully! Our engineers will contact you.',
