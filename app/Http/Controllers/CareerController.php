@@ -17,7 +17,7 @@ class CareerController extends Controller
             'phone' => ['required', 'string', 'max:30'],
             'position' => ['required', 'string', 'max:255'],
             'cv' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
-            'recaptcha_token' => ['required', 'string'],
+            'recaptcha_token' => [$recaptcha->isConfigured() ? 'required' : 'nullable', 'string'],
         ]);
 
         if (! $recaptcha->verify($request->input('recaptcha_token'), 'career_submit')) {
