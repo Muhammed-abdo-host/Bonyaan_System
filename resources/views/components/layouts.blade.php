@@ -211,7 +211,33 @@
             </div>
         </div>
     </div>
-
+<!-- Shared Confirm Action Modal (replaces window.confirm everywhere) -->
+<div class="modal fade" id="confirmActionModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card p-0 border-0 overflow-hidden">
+            <div class="modal-header bg-met-navy text-white border-0">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-question-circle-fill text-gold me-2"></i>
+                    Please Confirm
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="mb-0 text-secondary" id="confirmActionModalBody">
+                    Are you sure?
+                </p>
+            </div>
+            <div class="modal-footer bg-light border-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-met-gold fw-bold" id="confirmActionModalOk">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- TOAST ALERTS WRAPPER CONTAINER -->
     <div id="toast-container" class="met-toast-wrapper"></div>
 
@@ -223,9 +249,10 @@
     <script src="{{ asset('js/recaptcha-helper.js') }}"></script>
     <script src="{{ asset('js/contact.js') }}"></script>
     <script src="{{ asset('js/estimator.js') }}"></script>
-
+<script src="{{ asset('js/confirm-modal.js') }}"></script>
     <script src="{{ asset('js/admin-leads.js') }}"></script>
     <script src="{{ asset('js/admin-projects.js') }}"></script>
+    <script src="{{ asset('js/client-projects.js') }}"></script>
     <script src="{{ asset('js/admin-site-updates.js') }}"></script>
     <script src="{{ asset('js/admin-messages.js') }}"></script>
     <script src="{{ asset('js/admin-blog.js') }}"></script>
