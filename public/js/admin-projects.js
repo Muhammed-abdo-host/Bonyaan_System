@@ -14,25 +14,12 @@ function escapeHtml(value) {
   }[character]));
 }
 
-window.toggleCMSProjectForm = async function (forceOpen = null) {
-  const panel = document.getElementById('addCMSProjectPanel');
-
-  if (!panel) return;
-
-  const shouldOpen = forceOpen === null
-    ? panel.classList.contains('d-none')
-    : forceOpen;
-
-  panel.classList.toggle('d-none', !shouldOpen);
-
-  if (shouldOpen) {
-    await loadClientOptions();
-
-    panel.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
+// Maps a project's status to the Bootstrap badge class + label shown
+// in the admin CMS table.
+const PROJECT_STATUS_BADGES = {
+  pending: { label: 'Pending Approval', className: 'bg-warning text-dark' },
+  ongoing: { label: 'Ongoing', className: 'bg-info text-dark' },
+  completed: { label: 'Completed', className: 'bg-success' },
 };
 
 async function fetchAndRenderProjects() {
@@ -79,7 +66,7 @@ function renderCMSProjectsFromApi(projects) {
     tbody.innerHTML = `
       <tr>
         <td colspan="7" class="text-center text-muted py-4">
-          No projects have been added yet.
+          No project requests yet.
         </td>
       </tr>
     `;
@@ -106,6 +93,24 @@ function renderCMSProjectsFromApi(projects) {
         </div>
       `;
 
+    const statusInfo = PROJECT_STATUS_BADGES[project.status] || {
+      label: escapeHtml(project.status || 'Unknown'),
+      className: 'bg-secondary',
+    };
+
+    const acceptButton = project.status === 'pending'
+      ? `
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          onclick="acceptCMSProject(${project.id})"
+          title="Accept this project and move it to Ongoing"
+        >
+          <i class="bi bi-check-lg"></i> Accept
+        </button>
+      `
+      : '';
+
     return `
       <tr>
         <td class="fw-bold text-met-navy">#${project.id}</td>
@@ -124,13 +129,13 @@ function renderCMSProjectsFromApi(projects) {
           </div>
         </td>
 
+        <td class="small">${escapeHtml(project.client)}</td>
+
         <td>
-          <span class="badge bg-met-navy text-gold">
-            ${escapeHtml(project.category)}
+          <span class="badge ${statusInfo.className}">
+            ${statusInfo.label}
           </span>
         </td>
-
-        <td class="small">${escapeHtml(project.client)}</td>
 
         <td>
           <div class="d-flex align-items-center gap-2">
@@ -155,129 +160,65 @@ function renderCMSProjectsFromApi(projects) {
         </td>
 
         <td>
-          <button
-            type="button"
-            class="btn btn-sm btn-outline-danger"
-            onclick="deleteCMSProject(${project.id})"
-            title="Delete project"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
+          <div class="d-flex gap-1">
+            ${acceptButton}
+
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-danger"
+              onclick="deleteCMSProject(${project.id})"
+              title="Delete / reject this project"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
     `;
   }).join('');
 }
 
-async function loadClientOptions() {
-  const select = document.getElementById('cms-client');
+window.acceptCMSProject = async function (id) {
+  const confirmed = await confirmAction(
+    'Accept this project? It will move to "Ongoing" and become visible in the client\'s tracker.'
+  );
 
-  if (!select) return;
-
-  select.innerHTML = '<option value="">Loading clients...</option>';
-
-  try {
-    const response = await fetch('/admin/clients', {
-      headers: { Accept: 'application/json' },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to load clients');
-    }
-
-    const clients = await response.json();
-
-    select.innerHTML = clients.length
-      ? `
-        <option value="">Select a client...</option>
-        ${clients.map((client) => `
-          <option value="${client.id}">
-            ${escapeHtml(client.name)} — ${escapeHtml(client.email)}
-          </option>
-        `).join('')}
-      `
-      : '<option value="">No client accounts found</option>';
-  } catch (error) {
-    console.error('Could not load clients:', error);
-
-    select.innerHTML = '<option value="">Could not load clients</option>';
-
-    showToast?.('Could not load client accounts.', 'error');
-  }
-}
-
-window.addProjectCMS = async function (event) {
-  event.preventDefault();
-
-  const form = event.target;
-  const submitButton = form.querySelector('button[type="submit"]');
-  const originalText = submitButton?.innerText || '';
-
-  const payload = {
-    client_id: document.getElementById('cms-client')?.value || '',
-    name: document.getElementById('cms-title')?.value || '',
-    type: document.getElementById('cms-category')?.value || '',
-    location: document.getElementById('cms-location')?.value || '',
-    area: document.getElementById('cms-area')?.value || '',
-    budget: document.getElementById('cms-budget')?.value || '',
-    progress_percent: document.getElementById('cms-completion')?.value || 0,
-    image: document.getElementById('cms-image')?.value || '',
-    description: document.getElementById('cms-desc')?.value || '',
-  };
-
-  if (submitButton) {
-    submitButton.disabled = true;
-    submitButton.innerText = 'Publishing...';
-  }
+  if (!confirmed) return;
 
   try {
-    const response = await fetch('/admin/projects', {
-      method: 'POST',
+    const response = await fetch(`/admin/projects/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         'X-CSRF-TOKEN': csrfHeader(),
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ status: 'ongoing' }),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      const validationErrors = Object.values(data.errors || {})
-        .flat()
-        .join('\n');
-
-      throw new Error(
-        validationErrors || data.message || 'Could not save the project.'
-      );
+      throw new Error(data.message || 'Could not accept project.');
     }
 
-    showToast?.(data.message || 'Project published successfully.');
-
-    form.reset();
-    toggleCMSProjectForm(false);
+    showToast?.(data.message || 'Project accepted and moved to Ongoing.');
 
     await fetchAndRenderProjects();
   } catch (error) {
-    console.error('Could not save project:', error);
+    console.error('Could not accept project:', error);
 
     showToast?.(
-      error.message || 'Could not save the project. Please try again.',
+      error.message || 'Could not accept the project.',
       'error'
     );
-  } finally {
-    if (submitButton) {
-      submitButton.disabled = false;
-      submitButton.innerText = originalText;
-    }
   }
 };
 
 window.deleteCMSProject = async function (id) {
-  if (!window.confirm('Delete this project permanently?')) {
-    return;
-  }
+  const confirmed = await confirmAction('Delete this project permanently?');
+
+  if (!confirmed) return;
 
   try {
     const response = await fetch(`/admin/projects/${id}`, {
@@ -308,5 +249,7 @@ window.deleteCMSProject = async function (id) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetchAndRenderProjects();
+  if (document.getElementById('cms-projects-body')) {
+    fetchAndRenderProjects();
+  }
 });

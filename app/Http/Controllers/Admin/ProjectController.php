@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -32,52 +30,6 @@ class ProjectController extends Controller
         return response()->json($projects);
     }
 
-    public function clients(): JsonResponse
-    {
-        $clientRoleId = Role::where('name', 'client')->value('id');
-
-        $clients = User::where('role_id', $clientRoleId)
-            ->orderBy('name')
-            ->get(['id', 'name', 'email']);
-
-        return response()->json($clients);
-    }
-
-    public function store(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'client_id' => ['required', 'exists:users,id'],
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', Rule::in(['villa', 'office', 'mall', 'warehouse'])],
-            'location' => ['nullable', 'string', 'max:255'],
-            'area' => ['required', 'numeric', 'min:1'],
-            'floors' => ['nullable', 'integer', 'min:1'],
-            'progress_percent' => ['nullable', 'integer', 'min:0', 'max:100'],
-            'budget' => ['nullable', 'string', 'max:255'],
-            'image' => ['nullable', 'url', 'max:2048'],
-            'description' => ['nullable', 'string'],
-        ]);
-
-        $project = Project::create([
-            'client_id' => $validated['client_id'],
-            'name' => $validated['name'],
-            'type' => $validated['type'],
-            'location' => $validated['location'] ?? null,
-            'area' => $validated['area'],
-            'floors' => $validated['floors'] ?? 1,
-            'status' => 'ongoing',
-            'progress_percent' => $validated['progress_percent'] ?? 0,
-            'budget' => $validated['budget'] ?? null,
-            'image' => $validated['image'] ?? null,
-            'description' => $validated['description'] ?? null,
-        ]);
-
-        return response()->json([
-            'message' => 'New project published to CMS portfolio!',
-            'project' => $project,
-        ], 201);
-    }
-
     public function update(Request $request, Project $project): JsonResponse
     {
         $validated = $request->validate([
@@ -86,7 +38,7 @@ class ProjectController extends Controller
             'location' => ['sometimes', 'nullable', 'string', 'max:255'],
             'area' => ['sometimes', 'numeric', 'min:1'],
             'floors' => ['sometimes', 'integer', 'min:1'],
-            'status' => ['sometimes', Rule::in(['ongoing', 'completed'])],
+            'status' => ['sometimes', Rule::in(['pending', 'ongoing', 'completed'])],
             'progress_percent' => ['sometimes', 'integer', 'min:0', 'max:100'],
             'budget' => ['sometimes', 'nullable', 'string', 'max:255'],
             'image' => ['sometimes', 'nullable', 'url', 'max:2048'],

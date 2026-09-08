@@ -144,5 +144,7 @@ async function updateMessageStatus(id, newStatus, options = {}) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetchAndRenderMessages();
+  if (document.getElementById('messages-body')) {
+    fetchAndRenderMessages();
+  }
 });

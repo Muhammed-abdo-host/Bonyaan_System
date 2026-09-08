@@ -6,6 +6,11 @@ const state = {
   adminSubView: 'overview',
   currentPage: 'home',
 
+  // NOTE: This mock array is still used by the PUBLIC "/projects" portfolio
+  // page's client-side filter/search (see renderProjects, applyProjectFilter
+  // in projects.blade.php). It is NOT used anywhere in the admin dashboard
+  // anymore — the admin CMS/CRM/Site Tracker tabs are fully backed by the
+  // real database via admin-projects.js / admin-leads.js / admin-site-updates.js.
   projects: [
     {
       id: 1,
@@ -57,21 +62,10 @@ const state = {
     }
   ],
 
+  // Still read by renderAdminOverview()'s "Active Quote Inquiries" KPI.
+  // That KPI isn't wired to the real /admin/leads API yet — tracked as a
+  // separate, known follow-up item, out of scope for this fix.
   leads: [],
-
-  siteUpdates: [],
-
-  applicants: [
-    { id: 'APP-101', name: 'Yousef Al-Amri', email: 'yousef@email.com', job: 'Structural Engineer', exp: '6 years', cvName: 'yousef_cv.pdf', status: 'Interviewed' },
-    { id: 'APP-102', name: 'Layla Hassan', email: 'layla@email.com', job: 'Site Supervisor', exp: '4 years', cvName: 'layla_cv.pdf', status: 'Pending Review' }
-  ],
-
-  clients: [
-    { id: 'CL-01', name: 'Al Reem Development Co.' },
-    { id: 'CL-02', name: 'Marina Bay Holdings' },
-    { id: 'CL-03', name: 'Horizon Retail Group' },
-    { id: 'CL-04', name: 'Falcon Supply Chain' }
-  ]
 };
 
 // Toast Notification Manager
@@ -130,9 +124,14 @@ function setAdminSubView(subViewId) {
     }
   });
 
-  if (subViewId === 'cms') renderCMSProjects();
-  if (subViewId === 'crm') renderCRMLeads();
-  if (subViewId === 'site') renderSiteManager();
+  // Each tab is backed by its own real, database-driven fetch function
+  // (defined in admin-projects.js / admin-leads.js / admin-site-updates.js /
+  // the inline <script> in adminbanal.blade.php / admin-messages.js /
+  // admin-blog.js). We re-fetch every time the tab is opened so the data
+  // is always fresh — never a locally cached mock array.
+  if (subViewId === 'cms' && typeof fetchAndRenderProjects === 'function') fetchAndRenderProjects();
+  if (subViewId === 'crm' && typeof fetchAndRenderLeads === 'function') fetchAndRenderLeads();
+  if (subViewId === 'site' && typeof fetchAndRenderSiteUpdates === 'function') fetchAndRenderSiteUpdates();
   if (subViewId === 'hr' && typeof loadHrApplicants === 'function') loadHrApplicants();
   if (subViewId === 'messages' && typeof fetchAndRenderMessages === 'function') fetchAndRenderMessages();
   if (subViewId === 'blog' && typeof fetchAndRenderBlogPosts === 'function') fetchAndRenderBlogPosts();
@@ -169,6 +168,30 @@ function setRole(roleKey) {
 // checkbox ids that no longer exist in the forms, and never talked to
 // the backend at all. Do not re-add them here.
 
+// NOTE: The admin CMS Portfolio, CRM Leads, Site Tracker, and HR Manager
+// mock render functions (renderCMSProjects / addProjectCMS / deleteCMSProject /
+// renderCRMLeads / updateLeadStatus / assignLead / renderSiteManager /
+// addSiteUpdate / renderHRManager / updateApplicantStatus / addApplicant)
+// used to live here, driven by local mock arrays (state.projects for the
+// CMS table, state.leads, state.siteUpdates, state.applicants).
+//
+// They have been removed. Every admin tab is now backed by the real
+// database through its own dedicated file, and re-fetched fresh each time
+// its tab is opened (see setAdminSubView above):
+//   - CMS Portfolio  -> public/js/admin-projects.js   (fetchAndRenderProjects)
+//   - CRM Leads      -> public/js/admin-leads.js      (fetchAndRenderLeads)
+//   - Site Tracker   -> public/js/admin-site-updates.js (fetchAndRenderSiteUpdates)
+//   - HR & Jobs      -> inline <script> in adminbanal.blade.php (loadHrApplicants)
+//   - Contact Msgs   -> public/js/admin-messages.js   (fetchAndRenderMessages)
+//   - Blog & News    -> public/js/admin-blog.js       (fetchAndRenderBlogPosts)
+//
+// Keeping the old mock versions here was the root cause of a real bug:
+// both the mock function AND the real fetch function targeted the exact
+// same table (e.g. #cms-projects-body), so every time an admin re-opened
+// a tab, the mock version silently overwrote the real, database-driven
+// data with static demo rows. Do not re-add mock versions of these
+// functions here — always fetch from the real /admin/* endpoints.
+
 // Projects Filter Helper
 window.currentProjectFilter = 'all';
 function filterProjectsCategory(cat, btnEl) {
@@ -178,7 +201,8 @@ function filterProjectsCategory(cat, btnEl) {
   renderProjects(cat);
 }
 
-// Projects Portfolio Render
+// Projects Portfolio Render (PUBLIC "/projects" page only — uses the mock
+// state.projects array above, unrelated to the admin dashboard).
 function renderProjects(filterCategory = 'all', searchQuery = '') {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
@@ -218,7 +242,7 @@ function renderProjects(filterCategory = 'all', searchQuery = '') {
   `).join('');
 }
 
-// Open Project Details Modal
+// Open Project Details Modal (public portfolio page only)
 function openProjectModal(projId) {
   const p = state.projects.find(item => item.id === projId);
   if (!p) return;
@@ -237,14 +261,12 @@ function openProjectModal(projId) {
   }
 }
 
-// Render Admin Overview
+// Render Admin Overview (KPI cards on the "Overview" tab only)
 function renderAdminOverview() {
   const leadsBody = document.getElementById('admin-overview-leads-body');
   const kpiLeads = document.getElementById('kpi-leads-count');
-  const kpiSites = document.getElementById('kpi-sites-count');
 
   if (kpiLeads) kpiLeads.innerText = state.leads.length;
-  if (kpiSites) kpiSites.innerText = state.projects.filter(p => p.completion < 100).length;
 
   if (leadsBody) {
     leadsBody.innerHTML = state.leads.slice(0, 5).map(l => `
@@ -259,190 +281,11 @@ function renderAdminOverview() {
   }
 }
 
-// CMS Projects CRUD Table
-function renderCMSProjects() {
-  const tbody = document.getElementById('cms-projects-body');
-  if (!tbody) return;
-
-  tbody.innerHTML = state.projects.map(p => `
-    <tr>
-      <td class="fw-bold text-met-navy">#${p.id}</td>
-      <td>${p.title}</td>
-      <td>${p.client}</td>
-      <td>${p.location}</td>
-      <td>${p.area.toLocaleString()} m²</td>
-      <td class="fw-bold text-gold">${p.budget}</td>
-      <td>${p.completion}%</td>
-      <td>
-        <button class="btn btn-sm btn-outline-danger" onclick="deleteCMSProject(${p.id})">
-          <i class="bi bi-trash"></i>
-        </button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function deleteCMSProject(id) {
-  state.projects = state.projects.filter(p => p.id !== id);
-  showToast('Project removed successfully.', 'info');
-  renderCMSProjects();
-  renderProjects();
-}
-
-function addProjectCMS(e) {
-  e.preventDefault();
-  const newProject = {
-    id: Date.now(),
-    title: document.getElementById('cms-title')?.value || 'Untitled Project',
-    category: document.getElementById('cms-category')?.value || 'villa',
-    client: document.getElementById('cms-client')?.value || 'Unassigned Client',
-    location: document.getElementById('cms-location')?.value || '',
-    area: parseInt(document.getElementById('cms-area')?.value || 0, 10),
-    budget: document.getElementById('cms-budget')?.value || '$0',
-    completion: parseInt(document.getElementById('cms-completion')?.value || 0, 10),
-    image: document.getElementById('cms-image')?.value || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800',
-    description: document.getElementById('cms-description')?.value || ''
-  };
-
-  state.projects.unshift(newProject);
-  showToast('Project added successfully!');
-  e.target.reset();
-  renderCMSProjects();
-  renderProjects();
-}
-
-// CRM Leads Table
-function renderCRMLeads() {
-  const tbody = document.getElementById('crm-leads-body');
-  if (!tbody) return;
-
-  tbody.innerHTML = state.leads.map(l => `
-    <tr>
-      <td class="fw-bold text-met-navy">#${l.id}</td>
-      <td>
-        <div class="fw-bold">${l.name}</div>
-        <div class="small text-muted"><i class="bi bi-envelope"></i> ${l.email}</div>
-      </td>
-      <td>
-        <div class="small fw-semibold">${l.projectType}</div>
-        <div class="small text-muted">${l.location || '—'} (${l.area})</div>
-      </td>
-      <td class="fw-bold text-met-navy small">${l.budget}</td>
-      <td>
-        <select class="form-select form-select-sm fw-semibold" onchange="updateLeadStatus(${l.id}, this.value)">
-          <option value="new" ${l.status === 'new' ? 'selected' : ''}>New</option>
-          <option value="contacted" ${l.status === 'contacted' ? 'selected' : ''}>Contacted</option>
-          <option value="converted" ${l.status === 'converted' ? 'selected' : ''}>Converted</option>
-          <option value="rejected" ${l.status === 'rejected' ? 'selected' : ''}>Rejected</option>
-        </select>
-     </td>
-<td>${renderLeadAttachments ? renderLeadAttachments(l.attachments) : ''}</td>
-<td class="small text-muted">${l.date}</td>
-    </tr>
-  `).join('');
-}
-
-function updateLeadStatus(id, newStatus) {
-  const l = state.leads.find(item => item.id === id);
-  if (l) l.status = newStatus;
-  showToast(`Lead ${id} status updated to ${newStatus}`);
-}
-
-function assignLead(id, repName) {
-  const l = state.leads.find(item => item.id === id);
-  if (l) l.assignedTo = repName;
-  showToast(`Lead ${id} assigned to ${repName}`);
-}
-
-// Site Manager & Client Portal Stream Render
-function renderSiteManager() {
-  const grid = document.getElementById('site-stream-grid');
-  if (!grid) return;
-
-  if (!state.siteUpdates.length) {
-    grid.innerHTML = '<div class="col-12 text-center text-muted py-4">No site updates published yet.</div>';
-    return;
-  }
-
-  grid.innerHTML = state.siteUpdates.map(u => `
-    <div class="col-md-6 col-lg-4">
-      <div class="glass-card h-100 overflow-hidden">
-        <img src="${u.image}" class="w-100" style="height: 180px; object-fit: cover;" alt="${u.title}">
-        <div class="p-3">
-          <h6 class="fw-bold text-met-navy mb-1">${u.title}</h6>
-          <div class="small text-muted mb-2">${u.projectName || ''}</div>
-          <p class="small text-secondary mb-0">${u.notes || ''}</p>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function addSiteUpdate(e) {
-  e.preventDefault();
-  const newUpdate = {
-    id: Date.now(),
-    title: document.getElementById('site-title')?.value || 'Site Update',
-    projectName: document.getElementById('site-project')?.selectedOptions?.[0]?.text || '',
-    image: document.getElementById('site-image')?.value || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800',
-    notes: document.getElementById('site-notes')?.value || ''
-  };
-
-  state.siteUpdates.unshift(newUpdate);
-  showToast('Site update published successfully!');
-  e.target.reset();
-  renderSiteManager();
-}
-
-// HR Manager Render
-function renderHRManager() {
-  const tbody = document.getElementById('hr-applicants-body');
-  if (!tbody) return;
-
-  tbody.innerHTML = state.applicants.map(a => `
-    <tr>
-      <td class="fw-bold text-met-navy">${a.id}</td>
-      <td><div class="fw-bold">${a.name}</div><div class="small text-muted">${a.email}</div></td>
-      <td class="small fw-semibold">${a.job}</td>
-      <td class="small">${a.exp}</td>
-      <td>
-        <button class="btn btn-sm btn-outline-secondary py-1" onclick="showToast('Downloading ${a.cvName}...', 'info')">
-          <i class="bi bi-download"></i> ${a.cvName}
-        </button>
-      </td>
-      <td>
-        <select class="form-select form-select-sm fw-semibold" onchange="updateApplicantStatus('${a.id}', this.value)">
-          <option value="Pending Review" ${a.status === 'Pending Review' ? 'selected' : ''}>Pending Review</option>
-          <option value="Interviewed" ${a.status === 'Interviewed' ? 'selected' : ''}>Interviewed</option>
-          <option value="Hired" ${a.status === 'Hired' ? 'selected' : ''}>Hired</option>
-          <option value="Rejected" ${a.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
-        </select>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function updateApplicantStatus(id, newStatus) {
-  const a = state.applicants.find(item => item.id === id);
-  if (a) a.status = newStatus;
-  showToast(`Applicant ${id} status updated to ${newStatus}`);
-}
-
-function addApplicant(e) {
-  e.preventDefault();
-  showToast('Application submitted successfully!');
-  e.target.reset();
-}
-
 // Master Render All for current page context
 function renderAllViews() {
   updateActiveNav();
   renderProjects();
   renderAdminOverview();
-  renderCMSProjects();
-  renderCRMLeads();
-  renderSiteManager();
-  renderHRManager();
   if (typeof calculateCost === 'function') calculateCost();
   if (typeof checkQuotePreset === 'function') checkQuotePreset();
 

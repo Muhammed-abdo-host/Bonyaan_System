@@ -121,5 +121,7 @@ async function updateLeadStatus(id, newStatus) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetchAndRenderLeads();
+  if (document.getElementById('crm-leads-body')) {
+    fetchAndRenderLeads();
+  }
 });

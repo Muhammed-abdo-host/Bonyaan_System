@@ -9,11 +9,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        DB::statement("ALTER TABLE job_applicants MODIFY status ENUM('new','reviewing','interview','hired','rejected') DEFAULT 'new'");
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE job_applicants MODIFY status ENUM('new','reviewing','interview','hired','rejected') DEFAULT 'new'");
+        }
     }
 
     public function down(): void
     {
-        DB::statement("ALTER TABLE job_applicants MODIFY status ENUM('pending','reviewed','hired','rejected') DEFAULT 'pending'");
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE job_applicants MODIFY status ENUM('pending','reviewed','hired','rejected') DEFAULT 'pending'");
+        }
     }
 };

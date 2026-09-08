@@ -265,8 +265,9 @@ window.publishSiteUpdate = async function (event) {
 };
 
 window.deleteSiteUpdate = async function (id) {
-  if (!window.confirm('Delete this site update permanently?')) {
-    return;
+  const confirmed = await confirmAction('Delete this site update permanently?');
+
+  if (!confirmed) return;
   }
 
   try {
@@ -298,5 +299,7 @@ window.deleteSiteUpdate = async function (id) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetchAndRenderSiteUpdates();
+  if (document.getElementById('site-stream-grid')) {
+    fetchAndRenderSiteUpdates();
+  }
 });
