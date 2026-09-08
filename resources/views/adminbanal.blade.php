@@ -106,108 +106,9 @@
         <div id="admin-cms" class="subview-section">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-met-navy m-0">Portfolio CMS Manager</h4>
-
-                <button
-                    type="button"
-                    class="btn btn-met-gold btn-sm fw-bold"
-                    onclick="toggleCMSProjectForm()"
-                >
-                    <i class="bi bi-plus-lg"></i>
-                    Add New Project
-                </button>
-            </div>
-
-            <div id="addCMSProjectPanel" class="glass-card p-4 mb-4 d-none">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="fw-bold text-met-navy m-0">Add New Project</h5>
-
-                    <button
-                        type="button"
-                        class="btn-close"
-                        aria-label="Close"
-                        onclick="toggleCMSProjectForm(false)"
-                    ></button>
-                </div>
-
-                <form id="add-project-form" onsubmit="addProjectCMS(event)">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold" for="cms-title">Project Title</label>
-                            <input type="text" id="cms-title" class="form-control" required>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold" for="cms-category">Category</label>
-
-                            <select id="cms-category" class="form-select" required>
-                                <option value="villa">Villa</option>
-                                <option value="office">Office</option>
-                                <option value="mall">Mall</option>
-                                <option value="warehouse">Warehouse</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold" for="cms-client">Client</label>
-
-                            <select id="cms-client" class="form-select" required>
-                                <option value="">Loading clients...</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold" for="cms-location">Location</label>
-                            <input type="text" id="cms-location" class="form-control">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold" for="cms-area">Area (sq.m)</label>
-                            <input type="number" id="cms-area" class="form-control" min="1" required>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold" for="cms-budget">Budget</label>
-                            <input type="text" id="cms-budget" class="form-control" placeholder="$1.2M">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold" for="cms-completion">Completion %</label>
-
-                            <input
-                                type="number"
-                                id="cms-completion"
-                                class="form-control"
-                                min="0"
-                                max="100"
-                                value="0"
-                            >
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label small fw-bold" for="cms-image">Image URL</label>
-                            <input type="url" id="cms-image" class="form-control" placeholder="https://...">
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label small fw-bold" for="cms-description">Description</label>
-                            <textarea id="cms-description" class="form-control" rows="3"></textarea>
-                        </div>
-
-                        <div class="col-12 d-flex justify-content-end gap-2">
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary"
-                                onclick="toggleCMSProjectForm(false)"
-                            >
-                                Cancel
-                            </button>
-
-                            <button type="submit" class="btn btn-met-gold fw-bold">
-                                Save Project
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                <span class="small text-muted">
+                    Projects are requested by clients from their portal. Accept a pending request below to move it to "Ongoing".
+                </span>
             </div>
 
             <div class="glass-card p-3">
@@ -218,10 +119,9 @@
                                 <th>ID</th>
                                 <th>Project</th>
                                 <th>Client</th>
-                                <th>Location</th>
-                                <th>Area</th>
-                                <th>Budget</th>
+                                <th>Status</th>
                                 <th>Completion</th>
+                                <th>Budget</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -231,88 +131,89 @@
                 </div>
             </div>
         </div>
+
         <div id="admin-blog" class="subview-section">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold text-met-navy m-0">Blog & News Manager</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-met-navy m-0">Blog & News Manager</h4>
 
-        <button
-            type="button"
-            class="btn btn-met-gold btn-sm fw-bold"
-            onclick="toggleBlogPostForm()"
-        >
-            <i class="bi bi-plus-lg"></i>
-            Add New Article
-        </button>
-    </div>
-
-    <div id="addBlogPostPanel" class="glass-card p-4 mb-4 d-none">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="fw-bold text-met-navy m-0">Add New Article</h5>
-
-            <button
-                type="button"
-                class="btn-close"
-                aria-label="Close"
-                onclick="toggleBlogPostForm(false)"
-            ></button>
-        </div>
-
-        <form id="add-blog-form" onsubmit="addBlogPost(event)">
-            <div class="row g-3">
-                <div class="col-md-8">
-                    <label class="form-label small fw-bold" for="blog-title">Title</label>
-                    <input type="text" id="blog-title" class="form-control" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label small fw-bold" for="blog-category">Category</label>
-                    <input type="text" id="blog-category" class="form-control" placeholder="Engineering">
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label small fw-bold" for="blog-image">Cover Image URL</label>
-                    <input type="text" id="blog-image" class="form-control" placeholder="https://...">
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label small fw-bold" for="blog-excerpt">Excerpt (short summary)</label>
-                    <input type="text" id="blog-excerpt" class="form-control" maxlength="500">
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label small fw-bold" for="blog-content">Content</label>
-                    <textarea id="blog-content" class="form-control" rows="6" required></textarea>
-                </div>
-
-                <div class="col-12 form-check ps-4">
-                    <input type="checkbox" class="form-check-input" id="blog-published" checked>
-                    <label class="form-check-label small fw-bold" for="blog-published">Publish immediately</label>
-                </div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn btn-met-gold fw-bold w-100">Save Article</button>
-                </div>
+                <button
+                    type="button"
+                    class="btn btn-met-gold btn-sm fw-bold"
+                    onclick="toggleBlogPostForm()"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    Add New Article
+                </button>
             </div>
-        </form>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table custom-table align-middle">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Author</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th></th>
-                </tr>
-            </thead>
+            <div id="addBlogPostPanel" class="glass-card p-4 mb-4 d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold text-met-navy m-0">Add New Article</h5>
 
-            <tbody id="blog-posts-body"></tbody>
-        </table>
-    </div>
-</div>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        aria-label="Close"
+                        onclick="toggleBlogPostForm(false)"
+                    ></button>
+                </div>
+
+                <form id="add-blog-form" onsubmit="addBlogPost(event)">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label class="form-label small fw-bold" for="blog-title">Title</label>
+                            <input type="text" id="blog-title" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold" for="blog-category">Category</label>
+                            <input type="text" id="blog-category" class="form-control" placeholder="Engineering">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small fw-bold" for="blog-image">Cover Image URL</label>
+                            <input type="text" id="blog-image" class="form-control" placeholder="https://...">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small fw-bold" for="blog-excerpt">Excerpt (short summary)</label>
+                            <input type="text" id="blog-excerpt" class="form-control" maxlength="500">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small fw-bold" for="blog-content">Content</label>
+                            <textarea id="blog-content" class="form-control" rows="6" required></textarea>
+                        </div>
+
+                        <div class="col-12 form-check ps-4">
+                            <input type="checkbox" class="form-check-input" id="blog-published" checked>
+                            <label class="form-check-label small fw-bold" for="blog-published">Publish immediately</label>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-met-gold fw-bold w-100">Save Article</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table custom-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="blog-posts-body"></tbody>
+                </table>
+            </div>
+        </div>
 
         <div id="admin-crm" class="subview-section">
             <h4 class="fw-bold text-met-navy mb-3">CRM & Proposal Inquiries Manager</h4>
@@ -366,7 +267,7 @@
                     ></button>
                 </div>
 
-                <form id="add-site-update-form" onsubmit="addSiteUpdate(event)">
+                <form id="add-site-update-form" onsubmit="publishSiteUpdate(event)">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label small fw-bold" for="site-project">Project</label>
@@ -381,14 +282,25 @@
                             <input type="text" id="site-title" class="form-control" required>
                         </div>
 
-                        <div class="col-12">
-                            <label class="form-label small fw-bold" for="site-image">Photo URL</label>
-                            <input type="url" id="site-image" class="form-control" placeholder="https://...">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold" for="site-phase">Construction Phase</label>
+
+                            <select id="site-phase" class="form-select" required>
+                                <option value="excavation">Excavation</option>
+                                <option value="structure">Structure</option>
+                                <option value="mep">MEP</option>
+                                <option value="finishing">Finishing</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold" for="site-image">Photo (upload)</label>
+                            <input type="file" id="site-image" class="form-control" accept="image/png,image/jpeg,image/webp">
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label small fw-bold" for="site-notes">Inspection Notes</label>
-                            <textarea id="site-notes" class="form-control" rows="3"></textarea>
+                            <label class="form-label small fw-bold" for="site-description">Inspection Notes</label>
+                            <textarea id="site-description" class="form-control" rows="3"></textarea>
                         </div>
 
                         <div class="col-12 d-flex justify-content-end gap-2">
@@ -615,10 +527,6 @@ async function updateApplicantStatus(id, status) {
     });
 }
 
-// تأكد إن loadHrApplicants بتتستدعى لما الـ HR tab يتفتح
-// لو عندك function زي setAdminSubView، أضف جواها:
-// if (view === 'hr') loadHrApplicants();
-// وكمان استدعيها في أول تحميل الصفحة لتحديث الـ KPI:
 document.addEventListener('DOMContentLoaded', () => {
     loadHrApplicants();
 });
