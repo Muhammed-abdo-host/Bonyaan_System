@@ -21,7 +21,7 @@
                 <li>Post-tension slab engineering</li>
                 <li>Steel structure fabrication</li>
               </ul>
-              <a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="estimator.html">Calculate Cost</a>
+<a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="{{ url('/estimator') }}">Calculate Cost</a>
             </div>
           </div>
         </div>
@@ -37,8 +37,7 @@
                 <li>Smart automation & LED architectural grids</li>
                 <li>Curtain glass facade cladding</li>
               </ul>
-              <a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="quote.html">Request Quote</a>
-            </div>
+<a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="{{ url('/quote') }}">Request Quote</a>            </div>
           </div>
         </div>
 

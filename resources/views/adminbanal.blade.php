@@ -11,8 +11,7 @@
                 </h1>
             </div>
 
-            <div class="btn-group" id="admin-pills">
-                <button class="btn btn-sm btn-met-navy text-white" onclick="setAdminSubView('overview')">Overview</button>
+            <div class="d-flex flex-wrap gap-2" id="admin-pills"> <button class="btn btn-sm btn-met-navy text-white" onclick="setAdminSubView('overview')">Overview</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('cms')">CMS Portfolio</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('crm')">CRM Leads</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('site')">Site Tracker</button>
@@ -24,7 +23,7 @@
 
         <div id="admin-overview" class="subview-section active">
             <div class="row g-4 mb-4">
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -38,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -52,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -66,7 +65,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -138,8 +137,7 @@
                 <button
                     type="button"
                     class="btn btn-met-gold btn-sm fw-bold"
-                    onclick="toggleBlogPostForm()"
-                >
+                    onclick="toggleBlogPostForm()">
                     <i class="bi bi-plus-lg"></i>
                     Add New Article
                 </button>
@@ -153,8 +151,7 @@
                         type="button"
                         class="btn-close"
                         aria-label="Close"
-                        onclick="toggleBlogPostForm(false)"
-                    ></button>
+                        onclick="toggleBlogPostForm(false)"></button>
                 </div>
 
                 <form id="add-blog-form" onsubmit="addBlogPost(event)">
@@ -247,8 +244,7 @@
                 <button
                     type="button"
                     class="btn btn-met-gold btn-sm fw-bold"
-                    onclick="toggleSiteUpdateForm()"
-                >
+                    onclick="toggleSiteUpdateForm()">
                     <i class="bi bi-camera-fill"></i>
                     Publish Site Update
                 </button>
@@ -262,8 +258,7 @@
                         type="button"
                         class="btn-close"
                         aria-label="Close"
-                        onclick="toggleSiteUpdateForm(false)"
-                    ></button>
+                        onclick="toggleSiteUpdateForm(false)"></button>
                 </div>
 
                 <form id="add-site-update-form" onsubmit="publishSiteUpdate(event)">
@@ -306,8 +301,7 @@
                             <button
                                 type="button"
                                 class="btn btn-outline-secondary"
-                                onclick="toggleSiteUpdateForm(false)"
-                            >
+                                onclick="toggleSiteUpdateForm(false)">
                                 Cancel
                             </button>
 
@@ -326,7 +320,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-met-navy m-0">HR Job Applicants & Resumes</h4>
 
-              
+
             </div>
 
             <div class="glass-card p-3">
@@ -372,7 +366,7 @@
             </div>
         </div>
 
-      
+
     </div>
 
     <!-- Contact Message Detail Modal -->
@@ -407,25 +401,25 @@
     </div>
 </section>
 <script>
-// ===== HR MODULE =====
+    // ===== HR MODULE =====
 
-async function loadHrApplicants() {
-    const tbody = document.getElementById('hr-applicants-body');
-    const kpi   = document.getElementById('kpi-hr-count');
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Loading...</td></tr>';
+    async function loadHrApplicants() {
+        const tbody = document.getElementById('hr-applicants-body');
+        const kpi = document.getElementById('kpi-hr-count');
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Loading...</td></tr>';
 
-    try {
-        const res  = await fetch('/admin/hr/applicants');
-        const data = await res.json();
+        try {
+            const res = await fetch('/admin/hr/applicants');
+            const data = await res.json();
 
-        if (kpi) kpi.textContent = data.length;
+            if (kpi) kpi.textContent = data.length;
 
-        if (!data.length) {
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No applicants yet.</td></tr>';
-            return;
-        }
+            if (!data.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No applicants yet.</td></tr>';
+                return;
+            }
 
-        tbody.innerHTML = data.map(a => `
+            tbody.innerHTML = data.map(a => `
             <tr>
                 <td class="text-muted small">#${a.id}</td>
                 <td>
@@ -450,24 +444,26 @@ async function loadHrApplicants() {
             </tr>
         `).join('');
 
-    } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger py-4">Failed to load applicants.</td></tr>';
+        } catch (err) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger py-4">Failed to load applicants.</td></tr>';
+        }
     }
-}
 
-async function updateApplicantStatus(id, status) {
-    await fetch(`/admin/hr/applicants/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-        },
-        body: JSON.stringify({ status }),
+    async function updateApplicantStatus(id, status) {
+        await fetch(`/admin/hr/applicants/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({
+                status
+            }),
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadHrApplicants();
     });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadHrApplicants();
-});
 </script>
 @endsection
