@@ -46,7 +46,9 @@ Route::get('/careers', function () {
 
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit')->middleware('guest');
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.submit')
+    ->middleware(['guest', 'throttle:5,1']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {

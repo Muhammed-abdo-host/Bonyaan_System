@@ -10,8 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
+
 class SiteUpdateController extends Controller
 {
+    private const PHASE_PROGRESS = [
+    'excavation' => 25,
+    'structure' => 50,
+    'mep' => 75,
+    'finishing' => 100,
+];
     public function index(): JsonResponse
     {
         $updates = SiteUpdate::with('project:id,name')
@@ -60,6 +67,7 @@ class SiteUpdateController extends Controller
         ]);
 
         $update->load('project:id,name');
+        $this->syncProjectProgress($update->project);
 
         return response()->json([
             'message' => 'Site update published successfully.',
@@ -67,18 +75,20 @@ class SiteUpdateController extends Controller
         ], 201);
     }
 
-    public function destroy(SiteUpdate $siteUpdate): JsonResponse
-    {
-        if ($siteUpdate->image_path) {
-            Storage::disk('public')->delete($siteUpdate->image_path);
-        }
-
-        $siteUpdate->delete();
-
-        return response()->json([
-            'message' => 'Site update deleted successfully.',
-        ]);
+public function destroy(SiteUpdate $siteUpdate): JsonResponse
+{
+    if ($siteUpdate->image_path) {
+        Storage::disk('public')->delete($siteUpdate->image_path);
     }
+
+    $project = $siteUpdate->project;
+    $siteUpdate->delete();
+    $this->syncProjectProgress($project);
+
+    return response()->json([
+        'message' => 'Site update deleted successfully.',
+    ]);
+}
 
     private function formatUpdate(SiteUpdate $update): array
     {
@@ -95,4 +105,15 @@ class SiteUpdateController extends Controller
             'date' => $update->created_at->format('d M Y'),
         ];
     }
+    private function syncProjectProgress(Project $project): void
+{
+    $highestPhaseValue = $project->siteUpdates()
+        ->pluck('phase')
+        ->map(fn (string $phase) => self::PHASE_PROGRESS[$phase] ?? 0)
+        ->max();
+
+    $project->update([
+        'progress_percent' => $highestPhaseValue ?? 0,
+    ]);
+}
 }

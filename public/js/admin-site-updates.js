@@ -268,8 +268,7 @@ window.deleteSiteUpdate = async function (id) {
   const confirmed = await confirmAction('Delete this site update permanently?');
 
   if (!confirmed) return;
-  }
-
+  
   try {
     const response = await fetch(`/admin/site-updates/${id}`, {
       method: 'DELETE',
