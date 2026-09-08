@@ -174,7 +174,12 @@ async function fetchAndRenderSiteUpdates() {
       throw new Error('Could not load site updates.');
     }
 
-    renderSiteManager(await response.json());
+    const updates = await response.json();
+
+    const kpi = document.getElementById('kpi-sites-count');
+    if (kpi) kpi.textContent = updates.length;
+
+    renderSiteManager(updates);
   } catch (error) {
     console.error('Site update loading error:', error);
 

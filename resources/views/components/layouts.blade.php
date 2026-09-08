@@ -56,8 +56,7 @@
     </div>
 
     <!-- Primary Navigation Bar -->
-     <nav class="navbar navbar-expand-lg sticky-top met-navbar py-2.5">
-        <div class="container-fluid px-lg-5">
+<nav class="navbar navbar-expand-xl sticky-top met-navbar py-2.5">        <div class="container-fluid px-lg-5">
             <!-- Brand Logo -->
             <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
                 <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 36px; height: 36px;">
@@ -117,59 +116,63 @@
     @yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4">
-                    <a class="met-brand d-inline-flex align-items-center gap-2 mb-3" href="index.html">
-                        <span>Bonyaan<span>
-                    </a>
-                    <p class="small text-white-50 mb-4">
-                        Bonyaan is an industry-leading construction firm committed to structural integrity, futuristic design, and transparent client partnerships.
-                    </p>
-                    <div class="d-flex gap-3 text-gold fs-5">
-                        <i class="bi bi-linkedin"></i>
-                        <i class="bi bi-twitter-x"></i>
-                        <i class="bi bi-facebook"></i>
-                        <i class="bi bi-instagram"></i>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-2">
-                    <h6 class="fw-bold text-gold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="index.html">Home</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="about.html">About Us</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="services.html">Services</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="projects.html">Projects</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-6 col-lg-2">
-                    <h6 class="fw-bold text-gold mb-3">Tools & Systems</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="estimator.html">Cost Estimator</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="quote.html">Request Quote</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="client.html">Client Portal</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="admin.html">Admin Dashboard</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4">
-                    <h6 class="fw-bold text-gold mb-3">Contact Information</h6>
-                    <div class="small text-white-50 d-flex flex-column gap-2">
-                        <div><i class="bi bi-geo-alt-fill text-gold me-2"></i> King Fahd Financial Road, Tower 4, Riyadh, Saudi Arabia</div>
-                        <div><i class="bi bi-telephone-fill text-gold me-2"></i> +6048 2722 4400</div>
-                        <div><i class="bi bi-envelope-fill text-gold me-2"></i> Bonyaan@gmail.com</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-top border-secondary pt-4 text-center small text-white-50">
-                Bonyaan Contracting System. All rights reservedv &copy; 2026.
+       <div class="container">
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+            <a class="met-brand d-inline-flex align-items-center gap-2 mb-3" href="{{ url('/') }}">
+                <span>Bonyaan</span>
+            </a>
+            <p class="small text-white-50 mb-4">
+                Bonyaan is an industry-leading construction firm committed to structural integrity, futuristic design, and transparent client partnerships.
+            </p>
+            <div class="d-flex gap-3 text-gold fs-5">
+                <i class="bi bi-linkedin"></i>
+                <i class="bi bi-twitter-x"></i>
+                <i class="bi bi-facebook"></i>
+                <i class="bi bi-instagram"></i>
             </div>
         </div>
-    </footer>
 
+        <div class="col-6 col-lg-2">
+            <h6 class="fw-bold text-gold mb-3">Quick Links</h6>
+            <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/') }}">Home</a></li>
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/about') }}">About Us</a></li>
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/services') }}">Services</a></li>
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/projects') }}">Projects</a></li>
+            </ul>
+        </div>
+
+        <div class="col-6 col-lg-2">
+            <h6 class="fw-bold text-gold mb-3">Tools & Systems</h6>
+            <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
+                <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
+                @auth
+                    @if(auth()->user()->role?->name === 'client')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
+                    @elseif(auth()->user()->role?->name === 'admin')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                    @endif
+                @endauth
+            </ul>
+        </div>
+
+        <div class="col-lg-4">
+            <h6 class="fw-bold text-gold mb-3">Contact Information</h6>
+            <div class="small text-white-50 d-flex flex-column gap-2">
+                <div><i class="bi bi-geo-alt-fill text-gold me-2"></i> King Fahd Financial Road, Tower 4, Riyadh, Saudi Arabia</div>
+                <div><i class="bi bi-telephone-fill text-gold me-2"></i> +6048 2722 4400</div>
+                <div><i class="bi bi-envelope-fill text-gold me-2"></i> Bonyaan@gmail.com</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top border-secondary pt-4 text-center small text-white-50">
+        Bonyaan Contracting System. All rights reserved &copy; 2026.
+    </div>
+</div>
+    </footer>
     <!-- Project Detail Modal -->
     <div class="modal fade" id="projectDetailModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -206,7 +209,7 @@
                 </div>
                 <div class="modal-footer bg-light">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a class="btn btn-met-gold" href="quote.html">Request Similar Project</a>
+<a class="btn btn-met-gold" href="{{ url('/quote') }}">Request Similar Project</a>
                 </div>
             </div>
         </div>
@@ -257,5 +260,3 @@
     <script src="{{ asset('js/admin-messages.js') }}"></script>
     <script src="{{ asset('js/admin-blog.js') }}"></script>
 </body>
-
-~
