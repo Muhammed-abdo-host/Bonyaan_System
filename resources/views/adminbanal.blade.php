@@ -19,7 +19,6 @@
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('hr')">HR & Jobs</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('messages')">Contact Messages</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('blog')">Blog & News</button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="setAdminSubView('roles')">RBAC Roles</button>
             </div>
         </div>
 
@@ -327,15 +326,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-met-navy m-0">HR Job Applicants & Resumes</h4>
 
-                <button
-                    type="button"
-                    class="btn btn-met-gold btn-sm fw-bold"
-                    disabled
-                    title="HR management will be added in a later phase."
-                >
-                    <i class="bi bi-person-plus-fill"></i>
-                    Add Candidate
-                </button>
+              
             </div>
 
             <div class="glass-card p-3">
@@ -381,59 +372,7 @@
             </div>
         </div>
 
-        <div id="admin-roles" class="subview-section">
-            <h4 class="fw-bold text-met-navy mb-3">
-                Role-Based Access Control (RBAC) Switcher
-            </h4>
-
-            <div class="glass-card p-4">
-                <p class="text-muted">
-                    Select an active user role context to simulate permission boundaries across the system:
-                </p>
-
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded-3 text-center cursor-pointer bg-light" onclick="setRole('gm')">
-                            <i class="bi bi-person-badge-fill text-gold fs-2"></i>
-                            <h6 class="fw-bold mt-2 mb-1">General Manager</h6>
-                            <span class="small text-muted">Full System Access & Financial Approvals</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded-3 text-center cursor-pointer bg-light" onclick="setRole('sales')">
-                            <i class="bi bi-briefcase-fill text-primary fs-2"></i>
-                            <h6 class="fw-bold mt-2 mb-1">Sales Rep</h6>
-                            <span class="small text-muted">CRM Leads & Proposal Management</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded-3 text-center cursor-pointer bg-light" onclick="setRole('supervisor')">
-                            <i class="bi bi-tools text-warning fs-2"></i>
-                            <h6 class="fw-bold mt-2 mb-1">Site Supervisor</h6>
-                            <span class="small text-muted">Publish Site Photos & Inspection Stream</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded-3 text-center cursor-pointer bg-light" onclick="setRole('editor')">
-                            <i class="bi bi-pencil-square text-info fs-2"></i>
-                            <h6 class="fw-bold mt-2 mb-1">Content Editor</h6>
-                            <span class="small text-muted">Portfolio CMS & News Publisher</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded-3 text-center cursor-pointer bg-light" onclick="setRole('client')">
-                            <i class="bi bi-person-heart text-danger fs-2"></i>
-                            <h6 class="fw-bold mt-2 mb-1">Client User</h6>
-                            <span class="small text-muted">Client Portal Workspace Only</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
     </div>
 
     <!-- Contact Message Detail Modal -->

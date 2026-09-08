@@ -138,21 +138,7 @@ function setAdminSubView(subViewId) {
 }
 
 // Role Context Switcher
-function setRole(roleKey) {
-  state.activeRole = roleKey;
-  localStorage.setItem('met_active_role', roleKey);
-  const roleNames = {
-    gm: "General Manager",
-    sales: "Sales Rep",
-    supervisor: "Site Supervisor",
-    editor: "Content Editor",
-    client: "Client User"
-  };
-  const roleName = roleNames[roleKey] || "General Manager";
-  const badge = document.getElementById('current-role-badge');
-  if (badge) badge.innerText = roleName;
-  showToast(`Role context switched to: ${roleName}`, "info");
-}
+
 
 // NOTE: The Cost Estimator engine, quote-transfer helper, quote-preset
 // check, and the Quote/Contact form submit handlers used to be defined
