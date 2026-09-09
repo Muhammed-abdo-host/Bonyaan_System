@@ -12,14 +12,15 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required']
+            'password' => ['required'],
         ]);
 
-        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors(['email' => 'بيانات الدخول غير صحيحة'])->onlyInput('email');
         }
 
@@ -33,6 +34,7 @@ class AuthController extends Controller
             default => redirect('/'),
         };
     }
+
     public function logout(Request $request)
     {
         Auth::logout();

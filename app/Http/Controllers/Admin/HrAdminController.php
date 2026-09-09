@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\JobApplicant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class HrAdminController extends Controller
 {
@@ -18,16 +18,16 @@ class HrAdminController extends Controller
     {
         $applicants = JobApplicant::latest()->get()->map(function (JobApplicant $applicant) {
             return [
-                'id'       => $applicant->id,
-                'name'     => $applicant->name,
-                'email'    => $applicant->email,
-                'phone'    => $applicant->phone,
+                'id' => $applicant->id,
+                'name' => $applicant->name,
+                'email' => $applicant->email,
+                'phone' => $applicant->phone,
                 'position' => $applicant->position,
-                'status'   => $applicant->status,
-                'cv_url'   => $applicant->cv_path
+                'status' => $applicant->status,
+                'cv_url' => $applicant->cv_path
                     ? route('admin.hr.cv.download', $applicant)
                     : null,
-                'date'     => $applicant->created_at->format('Y-m-d'),
+                'date' => $applicant->created_at->format('Y-m-d'),
             ];
         });
 
@@ -52,7 +52,7 @@ class HrAdminController extends Controller
         $applicant->update($validated);
 
         return response()->json([
-            'message'   => "Applicant #{$applicant->id} status updated to {$applicant->status}.",
+            'message' => "Applicant #{$applicant->id} status updated to {$applicant->status}.",
             'applicant' => $applicant,
         ]);
     }
@@ -70,7 +70,7 @@ class HrAdminController extends Controller
 
         return Storage::disk('local')->download(
             $applicant->cv_path,
-            $applicant->name . '_CV.' . pathinfo($applicant->cv_path, PATHINFO_EXTENSION)
+            $applicant->name.'_CV.'.pathinfo($applicant->cv_path, PATHINFO_EXTENSION)
         );
     }
 }
