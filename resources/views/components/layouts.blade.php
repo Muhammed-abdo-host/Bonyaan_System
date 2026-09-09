@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>" />
@@ -18,7 +19,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <!-- Custom Styling System -->
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+    @if(config('services.recaptcha.site_key'))
+    <script>
+        window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
+    @endif
 </head>
 
 <body>
@@ -27,59 +40,91 @@
     <div class="top-header py-2 d-none d-md-block">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-4">
-                <span><i class="bi bi-telephone-fill text-gold me-1"></i> Call Us: +6048 2722 4400</span>
-                <span><i class="bi bi-envelope-fill text-gold me-1"></i> Bonyaan@gmail.com</span>
+                <span><i class="bi bi-telephone-fill text-gold me-1"></i> +6048 2722 4400</span>
+                <span><i class="bi bi-envelope-fill text-gold me-1"></i> info@bonyaan.com</span>
+                <span><i class="bi bi-geo-alt-fill text-gold me-1"></i> Riyadh • Dubai</span>
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-met-navy-light text-gold border border-warning" id="current-role-badge">General Manager</span>
+                @auth
+                <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
+                    <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
+                </span>
+                @else
+                <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
+                @endauth
             </div>
         </div>
     </div>
 
     <!-- Primary Navigation Bar -->
-    <nav class="navbar navbar-expand-lg sticky-top met-navbar">
-        <div class="container">
-            <a class="met-brand d-flex align-items-center gap-2" href="index.html">
-
+    <nav class="navbar navbar-expand-xl sticky-top met-navbar py-2.5">
+        <div class="container-fluid px-lg-5">
+            <!-- Brand Logo -->
+            <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
+                <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 36px; height: 36px;">
+                    <i class="bi bi-buildings-fill text-gold fs-5"></i>
+                </div>
+                <span class="fs-4 fw-bold text-white tracking-wide">Bonyaan</span>
             </a>
 
-            <button class="navbar-toggler text-white border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-                <span class="navbar-toggler-icon"></span>
+            <!-- Mobile Toggler -->
+            <!-- Mobile Toggler -->
+            <button class="navbar-toggler text-white border-secondary p-1.5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon" style="filter: invert(1) grayscale(100%) brightness(200%);"></span>
             </button>
 
+            <!-- Navigation Links -->
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/estimator">Cost Estimator</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/quote">Request Quote</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/blog">Blog & News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                </ul
-                <div class="d-flex align-items-center gap-2">
-                    <a class="btn btn-sm btn-outline-warning text-white me-2" href="/client">
-                        <i class="bi bi-person-workspace"></i> Client Portal
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-0 gap-xl-1" style="white-space: nowrap;">
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('projects') ? 'active' : '' }}" href="{{ url('/projects') }}">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('estimator') ? 'active' : '' }}" href="{{ url('/estimator') }}">Estimator</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('quote') ? 'active' : '' }}" href="{{ url('/quote') }}">Quote</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('blog') ? 'active' : '' }}" href="{{ url('/blog') }}">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->routeIs('careers') ? 'active' : '' }}" href="{{ route('careers') }}">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact</a></li>
+                </ul>
+
+                <!-- Auth Buttons Right -->
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0" style="white-space: nowrap;">
+                    @auth
+                    @if(auth()->user()->role?->name === 'admin')
+                    <a class="btn btn-met-gold btn-sm px-3 fw-bold d-inline-flex align-items-center gap-1.5" href="{{ route('admin.dashboard') }}">
+                        <i class="bi bi-speedometer2"></i> <span>Dashboard</span>
                     </a>
-                    <a class="btn btn-met-gold btn-sm d-flex align-items-center gap-1" href="/adminbanal">
-                        <i class="bi bi-speedometer2"></i> Admin Panel
+                    @elseif(auth()->user()->role?->name === 'client')
+                    <a class="btn btn-sm btn-outline-warning text-white px-3 d-inline-flex align-items-center gap-1.5" href="{{ route('client.portal') }}">
+                        <i class="bi bi-person-workspace"></i> <span>Portal</span>
                     </a>
+                    @endif
+
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-light px-2.5 py-1.5 d-inline-flex align-items-center gap-1" title="Sign out">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
+                    </form>
+                    @else
+                    <a class="btn btn-sm btn-outline-light px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" href="{{ route('login') }}">
+                        <i class="bi bi-box-arrow-in-right"></i> <span>Login</span>
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
     </nav>
 
-
-{{$slot}}
+    @yield('content')
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
         <div class="container">
             <div class="row g-4 mb-5">
                 <div class="col-lg-4">
-                    <a class="met-brand d-inline-flex align-items-center gap-2 mb-3" href="index.html">
-                        <span>Bonyaan<span>
+                    <a class="met-brand d-inline-flex align-items-center gap-2 mb-3" href="{{ url('/') }}">
+                        <span>Bonyaan</span>
                     </a>
                     <p class="small text-white-50 mb-4">
                         Bonyaan is an industry-leading construction firm committed to structural integrity, futuristic design, and transparent client partnerships.
@@ -95,20 +140,25 @@
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Quick Links</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="index.html">Home</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="about.html">About Us</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="services.html">Services</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="projects.html">Projects</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/') }}">Home</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/about') }}">About Us</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/services') }}">Services</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/projects') }}">Projects</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-lg-2">
                     <h6 class="fw-bold text-gold mb-3">Tools & Systems</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2 text-white-50">
-                        <li><a class="text-decoration-none text-white-50" href="estimator.html">Cost Estimator</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="quote.html">Request Quote</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="client.html">Client Portal</a></li>
-                        <li><a class="text-decoration-none text-white-50" href="admin.html">Admin Dashboard</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
+                        <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
+                        @auth
+                        @if(auth()->user()->role?->name === 'client')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
+                        @elseif(auth()->user()->role?->name === 'admin')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                        @endif
+                        @endauth
                     </ul>
                 </div>
 
@@ -123,11 +173,10 @@
             </div>
 
             <div class="border-top border-secondary pt-4 text-center small text-white-50">
-                Bonyaan Contracting System. All rights reservedv &copy; 2026.
+                Bonyaan Contracting System. All rights reserved &copy; 2026.
             </div>
         </div>
     </footer>
-
     <!-- Project Detail Modal -->
     <div class="modal fade" id="projectDetailModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -164,18 +213,54 @@
                 </div>
                 <div class="modal-footer bg-light">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a class="btn btn-met-gold" href="quote.html">Request Similar Project</a>
+                    <a class="btn btn-met-gold" href="{{ url('/quote') }}">Request Similar Project</a>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- Shared Confirm Action Modal (replaces window.confirm everywhere) -->
+    <div class="modal fade" id="confirmActionModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card p-0 border-0 overflow-hidden">
+                <div class="modal-header bg-met-navy text-white border-0">
+                    <h5 class="modal-title fw-bold">
+                        <i class="bi bi-question-circle-fill text-gold me-2"></i>
+                        Please Confirm
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="mb-0 text-secondary" id="confirmActionModalBody">
+                        Are you sure?
+                    </p>
+                </div>
+                <div class="modal-footer bg-light border-0">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-met-gold fw-bold" id="confirmActionModalOk">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- TOAST ALERTS WRAPPER CONTAINER -->
     <div id="toast-container" class="met-toast-wrapper"></div>
 
     <!-- JS DEPENDENCIES -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./app.js"></script>
-</body>
 
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('app.js') }}"></script>
+
+    <script src="{{ asset('js/recaptcha-helper.js') }}"></script>
+    <script src="{{ asset('js/contact.js') }}"></script>
+    <script src="{{ asset('js/estimator.js') }}"></script>
+    <script src="{{ asset('js/confirm-modal.js') }}"></script>
+    <script src="{{ asset('js/admin-leads.js') }}"></script>
+    <script src="{{ asset('js/admin-projects.js') }}"></script>
+    <script src="{{ asset('js/client-projects.js') }}"></script>
+    <script src="{{ asset('js/admin-site-updates.js') }}"></script>
+    <script src="{{ asset('js/admin-messages.js') }}"></script>
+    <script src="{{ asset('js/admin-blog.js') }}"></script>
+</body>

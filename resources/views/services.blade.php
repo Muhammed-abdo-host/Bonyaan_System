@@ -1,5 +1,6 @@
-<x-layouts>
-      <!-- SERVICES VIEW SECTION -->
+@extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+
+@section('content')      <!-- SERVICES VIEW SECTION -->
   <section id="view-services" class="view-section active animated-fade py-5">
     <div class="container py-4">
       <div class="text-center max-w-700 mx-auto mb-5">
@@ -20,7 +21,7 @@
                 <li>Post-tension slab engineering</li>
                 <li>Steel structure fabrication</li>
               </ul>
-              <a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="estimator.html">Calculate Cost</a>
+<a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="{{ url('/estimator') }}">Calculate Cost</a>
             </div>
           </div>
         </div>
@@ -36,8 +37,7 @@
                 <li>Smart automation & LED architectural grids</li>
                 <li>Curtain glass facade cladding</li>
               </ul>
-              <a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="quote.html">Request Quote</a>
-            </div>
+<a class="btn btn-sm btn-met-gold mt-2 text-decoration-none d-inline-block" href="{{ url('/quote') }}">Request Quote</a>            </div>
           </div>
         </div>
 
@@ -73,4 +73,4 @@
       </div>
     </div>
   </section>
-</x-layouts>
+@endsection
