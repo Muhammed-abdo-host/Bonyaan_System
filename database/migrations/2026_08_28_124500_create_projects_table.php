@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->decimal('area', 10, 2);
             $table->unsignedInteger('floors');
-            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
+            $table->enum('status', ['pending', 'ongoing', 'completed'])->default('pending');
             $table->unsignedInteger('progress_percent')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
