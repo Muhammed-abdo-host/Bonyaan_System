@@ -1,58 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="docs/screenshots/logo-banner.png" alt="Bonyaan — Premier Construction & Contracting" width="100%">
 </p>
 
-## About Laravel
+<h1 align="center">Bonyaan</h1>
+<p align="center">A full-stack construction & contracting platform — from an instant cost estimate to a live, photo-tracked build.</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white">
+  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/tests-14%20passing-brightgreen">
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <a href="#-live-demo">Live Demo</a> ·
+  <a href="#-features">Features</a> ·
+  <a href="#-tech-stack">Tech Stack</a> ·
+  <a href="#-getting-started">Getting Started</a> ·
+  <a href="#-testing">Testing</a>
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🖼️ Preview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<!-- استبدل الصور دي بالسكرين شوتس بتاعتك. اعمل فولدر docs/screenshots/ في جذر المشروع وحط الصور فيه. -->
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Homepage | Cost Estimator |
+|---|---|
+| ![Homepage](docs/screenshots/home.png) | ![Estimator](docs/screenshots/estimator.png) |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+| Admin — CRM Leads | Client Portal — Site Tracker |
+|---|---|
+| ![Admin CRM](docs/screenshots/admin-crm.png) | ![Client Portal](docs/screenshots/client-portal.png) |
 
-## Agentic Development
+<p align="center">
+  <!-- جيف بيوري الـ flow كامل: زائر بيعمل estimate → بيطلب quote → الأدمن بيوافق → العميل بيتابع تقدم البناء -->
+  <img src="docs/screenshots/demo-walkthrough.gif" alt="Bonyaan walkthrough" width="800">
+</p>
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🚀 Live Demo
+
+🔗 **[bonyaan-demo.example.com](https://bonyaan-demo.example.com)** <!-- حط لينك الديمو الحقيقي هنا -->
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@bonyaan.test` | `password` | <!-- حدّث ببيانات الديمو الحقيقية بتاعتك -->
+| Client | `client@bonyaan.test` | `password` |
+
+> Demo data is reset periodically. Feel free to explore every role without affecting real data.
+
+## ✨ Features
+
+Bonyaan isn't a template — every workflow below is wired end-to-end, from a public form, through validation and file storage, into an admin decision, and back out to the client.
+
+### For visitors & clients
+- **Instant cost estimator** — server-side calculation based on area, build type, and finish level, protected by reCAPTCHA v3
+- **Quote requests with attachments** — upload site plans/drawings; each request becomes a lead in the admin CRM
+- **Contact form** — automatic confirmation + admin notification emails (Brevo)
+- **Careers** — job listings with CV upload
+- **Blog** — published articles with individual post pages
+- **Client Portal** — logged-in clients see only *their own* projects
+- **Request a new project** directly from the portal — enters the admin's review queue as `pending`
+- **Live site tracker** — photo updates per construction phase (excavation → structure → MEP → finishing), with an auto-calculated overall progress bar
+
+### For admins
+- **Overview dashboard** — live KPI counts across leads, sites, applicants, and messages
+- **CRM** — every estimator/quote submission, with downloadable attachments and status tracking
+- **CMS** — manage the project portfolio; accept or decline client-submitted project requests
+- **Site Tracker** — post dated, photo-backed progress updates per project and phase
+- **HR** — review applicants and download CVs
+- **Blog & News** — full CRUD for site articles
+- **Contact Messages** — track and resolve inbound inquiries
+
+## 🛠️ Tech Stack
+
+| Layer | Choice |
+|---|---|
+| Backend | PHP 8.3, Laravel 13 |
+| Database | SQLite (testing) / MySQL (production) |
+| Frontend | Bootstrap 5, vanilla JS (fetch-based JSON APIs, no SPA framework) |
+| Auth | Session-based, role-gated via Laravel Gates (`admin` / `client`) |
+| Spam protection | Google reCAPTCHA v3 (score + action verification) |
+| Email | Brevo (transactional: contact confirmations, admin alerts) |
+| Testing | PHPUnit / `php artisan test` — 14 feature & unit tests |
+
+## ⚙️ Getting Started
 
 ```bash
-composer require laravel/boost --dev
+git clone git@github.com:Muhammed-abdo-host/Bonyaan_System.git
+cd Bonyaan_System
 
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# عدّل .env: اسم الداتابيز، ومفاتيح reCAPTCHA لو عايز تفعّله فعلياً
+# (من غير مفاتيح، النظام بيشتغل في وضع "fail-open" تلقائي في بيئة التطوير)
+
+php artisan migrate
+php artisan storage:link
+
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Visit `http://localhost:8000`.
 
-## Contributing
+## 🧪 Testing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan test
+```
 
-## Code of Conduct
+14 tests covering the estimator's calculation logic, public page availability, and protected file downloads.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📄 License
 
-## Security Vulnerabilities
+This project is available for portfolio and educational review. Contact the author for reuse permissions.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p align="center">Built by <a href="https://github.com/Muhammed-abdo-host">Muhammed Abdo</a></p>
