@@ -6,10 +6,10 @@
 <p align="center">A full-stack construction & contracting platform — from an instant cost estimate to a live, photo-tracked build.</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white">
-  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white">
-  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white">
-  <img src="https://img.shields.io/badge/tests-14%20passing-brightgreen">
+    <img src="docs/screenshots/CRMLeads.png" alt="CRM Leads" width="100%">
+    <img src="docs/screenshots/estimator.png" alt="Estimator" width="100%">
+    <img src="docs/screenshots/Home.png" alt="Home" width="100%">
+    <img src="docs/screenshots/siteTracker.png" alt="Site Tracker" width="100%">
 </p>
 
 <p align="center">
@@ -24,28 +24,25 @@
 
 ## 🖼️ Preview
 
-<!-- استبدل الصور دي بالسكرين شوتس بتاعتك. اعمل فولدر docs/screenshots/ في جذر المشروع وحط الصور فيه. -->
-
 | Homepage | Cost Estimator |
 |---|---|
-| ![Homepage](docs/screenshots/home.png) | ![Estimator](docs/screenshots/estimator.png) |
+| ![Homepage](docs/screenshots/Home.png) | ![Estimator](docs/screenshots/estimator.png) |
 
 | Admin — CRM Leads | Client Portal — Site Tracker |
 |---|---|
-| ![Admin CRM](docs/screenshots/admin-crm.png) | ![Client Portal](docs/screenshots/client-portal.png) |
+| ![Admin CRM](docs/screenshots/CRMLeads.png) | ![Client Portal](docs/screenshots/siteTracker.png) |
 
 <p align="center">
-  <!-- جيف بيوري الـ flow كامل: زائر بيعمل estimate → بيطلب quote → الأدمن بيوافق → العميل بيتابع تقدم البناء -->
   <img src="docs/screenshots/demo-walkthrough.gif" alt="Bonyaan walkthrough" width="800">
 </p>
 
 ## 🚀 Live Demo
 
-🔗 **[bonyaan-demo.example.com](https://bonyaan-demo.example.com)** <!-- حط لينك الديمو الحقيقي هنا -->
+🔗 **[bonyaan-demo.example.com](https://bonyaan-demo.example.com)**
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@bonyaan.test` | `password` | <!-- حدّث ببيانات الديمو الحقيقية بتاعتك -->
+| Admin | `admin@bonyaan.test` | `password` |
 | Client | `client@bonyaan.test` | `password` |
 
 > Demo data is reset periodically. Feel free to explore every role without affecting real data.
@@ -95,29 +92,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 
-# عدّل .env: اسم الداتابيز، ومفاتيح reCAPTCHA لو عايز تفعّله فعلياً
-# (من غير مفاتيح، النظام بيشتغل في وضع "fail-open" تلقائي في بيئة التطوير)
-
 php artisan migrate
 php artisan storage:link
 
 php artisan serve
-```
-
-Visit `http://localhost:8000`.
-
-## 🧪 Testing
-
-```bash
-php artisan test
-```
-
-14 tests covering the estimator's calculation logic, public page availability, and protected file downloads.
-
-## 📄 License
-
-This project is available for portfolio and educational review. Contact the author for reuse permissions.
-
----
-
-<p align="center">Built by <a href="https://github.com/Muhammed-abdo-host">Muhammed Abdo</a></p>
