@@ -59,15 +59,15 @@
              <div class="row g-2">
                <div class="col-6 col-sm-4">
                  <input type="radio" class="btn-check" name="est-tier" id="tier-standard" value="standard" onchange="calculateCost()">
-                 <label class="btn btn-outline-secondary w-100 py-2 text-center" for="tier-standard">Standard</label>
+                 <label class="btn btn-outline-dark w-100 py-2 text-center" for="tier-standard">Standard</label>
                </div>
                <div class="col-6 col-sm-4">
                  <input type="radio" class="btn-check" name="est-tier" id="tier-deluxe" value="deluxe" checked onchange="calculateCost()">
-                 <label class="btn btn-outline-secondary w-100 py-2 text-center" for="tier-deluxe">Deluxe</label>
+                 <label class="btn btn-outline-dark w-100 py-2 text-center" for="tier-deluxe">Deluxe</label>
                </div>
                <div class="col-6 col-sm-4">
                  <input type="radio" class="btn-check" name="est-tier" id="tier-ultra" value="ultra" onchange="calculateCost()">
-                 <label class="btn btn-outline-secondary w-100 py-2 text-center" for="tier-ultra">Ultra Luxury</label>
+                 <label class="btn btn-outline-dark w-100 py-2 text-center" for="tier-ultra">Ultra Luxury</label>
                </div>
              </div>
            </div>
