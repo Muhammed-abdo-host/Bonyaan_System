@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactConfirmation;
+use App\Mail\NewContactNotification;
 use App\Models\ContactMessage;
 use App\Services\RecaptchaVerifier;
 use Illuminate\Http\JsonResponse;
@@ -34,14 +36,14 @@ class ContactController extends Controller
             'message' => $validated['message'],
         ]);
 
-        try {
-            Mail::to($lead->email)->send(new QuoteConfirmation($lead));
+       try {
+    Mail::to($contactMessage->email)->send(new ContactConfirmation($contactMessage));
 
-            Mail::to(config('services.bonyaan.quote_notification_email'))
-                ->send(new NewQuoteNotification($lead));
-        } catch (\Throwable $e) {
-            Log::error('Failed to send quote emails: '.$e->getMessage());
-        }
+    Mail::to(config('services.bonyaan.contact_notification_email'))
+        ->send(new NewContactNotification($contactMessage));
+} catch (\Throwable $e) {
+    \Illuminate\Support\Facades\Log::error('Failed to send contact emails: ' . $e->getMessage());
+}
 
         return response()->json([
             'message' => 'Your message has been sent successfully. Our team will contact you shortly.',

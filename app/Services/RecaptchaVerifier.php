@@ -40,7 +40,6 @@ class RecaptchaVerifier
         }
 
         try {
-            // ... باقي الكود زي ما هو من غير تغيير
             $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret' => $this->secretKey,
                 'response' => $token,

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/screenshots/logo-banner.png" alt="Bonyaan — Premier Construction & Contracting" width="100%">
+  <img src="docs/screenshots/Logo.png" alt="Bonyaan — Premier Construction & Contracting" width="100%">
 </p>
 
 <h1 align="center">Bonyaan</h1>
