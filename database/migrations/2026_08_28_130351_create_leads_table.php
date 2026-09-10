@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->index();
             $table->string('phone')->nullable();
-            $table->string('location')->nullable(); 
+            $table->string('location')->nullable();
             $table->string('building_type');
             $table->decimal('area', 10, 2);
             $table->unsignedInteger('floors');
@@ -35,7 +35,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-Schema::table('leads', function (Blueprint $table) {
-        $table->dropColumn(['location', 'extras', 'notes']);
-    });    }
+        Schema::table('leads', function (Blueprint $table) {
+            $table->dropColumn(['location', 'extras', 'notes']);
+        });
+    }
 };

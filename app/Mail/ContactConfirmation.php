@@ -7,9 +7,7 @@ use Illuminate\Mail\Mailable;
 
 class ContactConfirmation extends Mailable
 {
-    public function __construct(public ContactMessage $contactMessage)
-    {
-    }
+    public function __construct(public ContactMessage $contactMessage) {}
 
     public function build(): self
     {

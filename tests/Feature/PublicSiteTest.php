@@ -9,6 +9,7 @@ use Tests\TestCase;
 class PublicSiteTest extends TestCase
 {
     use RefreshDatabase;
+
     #[DataProvider('publicPageUrls')]
     public function test_public_pages_are_available(string $url): void
     {

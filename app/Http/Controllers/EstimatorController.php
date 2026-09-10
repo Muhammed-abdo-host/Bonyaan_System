@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewQuoteNotification;
+use App\Mail\QuoteConfirmation;
 use App\Models\Lead;
 use App\Services\RecaptchaVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Mail\NewQuoteNotification;
-use App\Mail\QuoteConfirmation;
-use App\Models\QuoteAttachment;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class EstimatorController extends Controller
 {
@@ -130,7 +129,7 @@ class EstimatorController extends Controller
             Mail::to(config('services.bonyaan.quote_notification_email'))
                 ->send(new NewQuoteNotification($lead));
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Failed to send quote emails: ' . $e->getMessage());
+            Log::error('Failed to send quote emails: '.$e->getMessage());
         }
 
         return response()->json([

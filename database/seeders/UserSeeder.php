@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-         $adminRole = Role::where('name', 'admin')->first();
+        $adminRole = Role::where('name', 'admin')->first();
         $clientRole = Role::where('name', 'client')->first();
 
         User::firstOrCreate(
@@ -27,8 +26,7 @@ class UserSeeder extends Seeder
                 'phone' => '01000000000',
             ]);
 
-
-            User::firstOrCreate(
+        User::firstOrCreate(
             ['email' => 'client@bonyaan.test'],
             [
                 'role_id' => $clientRole->id,

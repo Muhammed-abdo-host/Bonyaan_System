@@ -11,7 +11,7 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $client = User::where('email', 'client@bonyaan.test')->first();
-        if (!$client) {
+        if (! $client) {
             return;
         }
 

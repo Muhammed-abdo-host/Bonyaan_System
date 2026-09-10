@@ -103,7 +103,7 @@ class BlogController extends Controller
                 ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
                 ->exists()
         ) {
-            $slug = "{$base}-" . ++$i;
+            $slug = "{$base}-".++$i;
         }
 
         return $slug;

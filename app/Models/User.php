@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use Illuminate\Database\Eloquent\Model;
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -19,15 +17,17 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-   public function projects()
-{
-    return $this->hasMany(Project::class, 'client_id');   // كان project::class بحرف صغير
-}
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'client_id');
+    }
 
     public function blogPosts()
     {
         return $this->hasMany(BlogPost::class, 'author_id');
     }
+
     public function isAdmin(): bool
     {
         return $this->role?->name === 'admin';

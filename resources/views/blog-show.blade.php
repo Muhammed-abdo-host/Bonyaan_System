@@ -38,6 +38,7 @@
                     <div class="glass-card overflow-hidden h-100">
                       <img
                         src="{{ $item->image_path ?: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=600&q=80' }}"
+                        alt="{{ $item->title }}"
                         class="w-100 object-fit-cover" style="height: 150px;"
                       >
                       <div class="p-3">

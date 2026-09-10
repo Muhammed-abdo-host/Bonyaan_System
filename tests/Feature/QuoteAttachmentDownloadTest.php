@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Lead;
-use App\Models\QuoteAttachment;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,9 +55,9 @@ class QuoteAttachmentDownloadTest extends TestCase
             ->assertDownload('blueprint.pdf');
     }
 
-   public function test_guest_is_redirected_from_the_protected_download_route(): void
-{
-    $this->get('/admin/attachments/999/download')
-        ->assertRedirect(route('login'));
-}
+    public function test_guest_is_redirected_from_the_protected_download_route(): void
+    {
+        $this->get('/admin/attachments/999/download')
+            ->assertRedirect(route('login'));
+    }
 }

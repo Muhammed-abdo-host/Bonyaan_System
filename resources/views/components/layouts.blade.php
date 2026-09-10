@@ -19,18 +19,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <!-- Custom Styling System -->
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     @if(config('services.recaptcha.site_key'))
-    <script>
-        window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
-    </script>
-    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
-    <style>
-        .grecaptcha-badge {
-            visibility: hidden;
-        }
-    </style>
+        <script>
+            window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+        <style>
+            .grecaptcha-badge { visibility: hidden; }
+        </style>
     @endif
 </head>
 
@@ -47,11 +45,11 @@
 
             <div class="d-flex align-items-center gap-3">
                 @auth
-                <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
-                    <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
-                </span>
+                    <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
+                        <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
+                    </span>
                 @else
-                <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
+                    <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
                 @endauth
             </div>
         </div>
@@ -60,80 +58,99 @@
     <!-- Primary Navigation Bar -->
     <nav class="navbar navbar-expand-xl sticky-top met-navbar py-2.5">
         <div class="container-fluid px-lg-5">
-            <!-- Brand Logo -->
+            <!-- Brand Logo (نظيف واحترافي) -->
             <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
-                <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 36px; height: 36px;">
+                <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 38px; height: 38px;">
                     <i class="bi bi-buildings-fill text-gold fs-5"></i>
                 </div>
                 <span class="fs-4 fw-bold text-white tracking-wide">Bonyaan</span>
             </a>
 
-            <!-- Mobile Toggler -->
-            <!-- Mobile Toggler -->
-            <button class="navbar-toggler text-white border-secondary p-1.5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-                <span class="navbar-toggler-icon" style="filter: invert(1) grayscale(100%) brightness(200%);"></span>
-            </button>
-
-            <!-- Navigation Links -->
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-0 gap-xl-1" style="white-space: nowrap;">
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('projects') ? 'active' : '' }}" href="{{ url('/projects') }}">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('estimator') ? 'active' : '' }}" href="{{ url('/estimator') }}">Estimator</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('quote') ? 'active' : '' }}" href="{{ url('/quote') }}">Quote</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('blog') ? 'active' : '' }}" href="{{ url('/blog') }}">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->routeIs('careers') ? 'active' : '' }}" href="{{ route('careers') }}">Careers</a></li>
-                    <li class="nav-item"><a class="nav-link px-2.5 py-1.5 {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact</a></li>
-                </ul>
-
-                <!-- Auth Buttons Right -->
-                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0" style="white-space: nowrap;">
-                    @auth
+            <!-- Right Controls: أيقونة تسجيل الدخول بالخارج + زر الموبايل المتناسق -->
+            <div class="d-flex align-items-center gap-2 order-xl-3">
+                @auth
                     @if(auth()->user()->role?->name === 'admin')
-                    <a class="btn btn-met-gold btn-sm px-3 fw-bold d-inline-flex align-items-center gap-1.5" href="{{ route('admin.dashboard') }}">
-                        <i class="bi bi-speedometer2"></i> <span>Dashboard</span>
-                    </a>
+                        <a class="btn btn-met-gold btn-sm px-2.5 py-1.5 fw-bold d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('admin.dashboard') }}">
+                            <i class="bi bi-speedometer2"></i> <span class="d-none d-sm-inline">Dashboard</span>
+                        </a>
                     @elseif(auth()->user()->role?->name === 'client')
-                    <a class="btn btn-sm btn-outline-warning text-white px-3 d-inline-flex align-items-center gap-1.5" href="{{ route('client.portal') }}">
-                        <i class="bi bi-person-workspace"></i> <span>Portal</span>
-                    </a>
+                        <a class="btn btn-sm btn-outline-warning text-white px-2.5 py-1.5 d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('client.portal') }}">
+                            <i class="bi bi-person-workspace"></i> <span class="d-none d-sm-inline">Portal</span>
+                        </a>
                     @endif
 
                     <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-outline-light px-2.5 py-1.5 d-inline-flex align-items-center gap-1" title="Sign out">
-                            <i class="bi bi-box-arrow-right"></i>
+                        <button type="submit" class="btn btn-sm text-white-50 p-1.5 border-0 hover-gold" title="Sign out">
+                            <i class="bi bi-box-arrow-right fs-5"></i>
                         </button>
                     </form>
-                    @else
-                    <a class="btn btn-sm btn-outline-light px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5" href="{{ route('login') }}">
-                        <i class="bi bi-box-arrow-in-right"></i> <span>Login</span>
+                @else
+                    <!-- أيقونة دخول دائرية ناعمة وشيك -->
+                    <a class="nav-icon-btn d-flex align-items-center justify-content-center text-decoration-none" href="{{ route('login') }}" title="Login">
+                        <i class="bi bi-person-circle fs-4 text-white"></i>
                     </a>
-                    @endauth
-                </div>
+                @endauth
+
+                <!-- زر القائمة للأجهزة الصغيرة -->
+                <button class="navbar-toggler custom-toggler p-1.5 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse order-xl-2" id="navbarMain">
+                <ul class="navbar-nav mx-auto mb-2 mb-xl-0 gap-0 gap-xl-1" style="white-space: nowrap;">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('/') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('about') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('services') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/services') }}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('projects', 'projects/*') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/projects') }}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('estimator') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/estimator') }}">Estimator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('quote') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/quote') }}">Quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('blog', 'blog/*') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/blog') }}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('careers', 'careers/*') ? 'active text-warning fw-semibold' : '' }}" href="{{ route('careers') }}">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('contact') ? 'active text-warning fw-semibold' : '' }}" href="{{ url('/contact') }}">Contact</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     @yield('content')
+
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
-        <div class="container">
+       <div class="container">
             <div class="row g-4 mb-5">
                 <div class="col-lg-4">
-                    <a class="met-brand d-inline-flex align-items-center gap-2 mb-3" href="{{ url('/') }}">
-                        <span>Bonyaan</span>
+                    <a class="met-brand d-inline-flex align-items-center gap-2 mb-3 text-decoration-none" href="{{ url('/') }}">
+                        <span class="fs-4 fw-bold text-white tracking-wide">Bonyaan</span>
                     </a>
                     <p class="small text-white-50 mb-4">
                         Bonyaan is an industry-leading construction firm committed to structural integrity, futuristic design, and transparent client partnerships.
                     </p>
                     <div class="d-flex gap-3 text-gold fs-5">
-                        <i class="bi bi-linkedin"></i>
-                        <i class="bi bi-twitter-x"></i>
-                        <i class="bi bi-facebook"></i>
-                        <i class="bi bi-instagram"></i>
+                        <a href="#" class="text-gold" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-gold" aria-label="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-gold" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-gold" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
 
@@ -153,11 +170,11 @@
                         <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
                         <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
                         @auth
-                        @if(auth()->user()->role?->name === 'client')
-                        <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
-                        @elseif(auth()->user()->role?->name === 'admin')
-                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
-                        @endif
+                            @if(auth()->user()->role?->name === 'client')
+                                <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
+                            @elseif(auth()->user()->role?->name === 'admin')
+                                <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                            @endif
                         @endauth
                     </ul>
                 </div>
@@ -177,6 +194,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Project Detail Modal -->
     <div class="modal fade" id="projectDetailModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -218,7 +236,8 @@
             </div>
         </div>
     </div>
-    <!-- Shared Confirm Action Modal (replaces window.confirm everywhere) -->
+
+    <!-- Shared Confirm Action Modal -->
     <div class="modal fade" id="confirmActionModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content glass-card p-0 border-0 overflow-hidden">
@@ -245,14 +264,13 @@
             </div>
         </div>
     </div>
+
     <!-- TOAST ALERTS WRAPPER CONTAINER -->
     <div id="toast-container" class="met-toast-wrapper"></div>
 
     <!-- JS DEPENDENCIES -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('app.js') }}"></script>
-
     <script src="{{ asset('js/recaptcha-helper.js') }}"></script>
     <script src="{{ asset('js/contact.js') }}"></script>
     <script src="{{ asset('js/estimator.js') }}"></script>
@@ -264,3 +282,5 @@
     <script src="{{ asset('js/admin-messages.js') }}"></script>
     <script src="{{ asset('js/admin-blog.js') }}"></script>
 </body>
+</html>
+```

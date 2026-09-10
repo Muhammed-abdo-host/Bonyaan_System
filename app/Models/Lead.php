@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\QuoteAttachment;
 use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
