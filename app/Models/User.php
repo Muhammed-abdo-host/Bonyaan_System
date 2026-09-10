@@ -20,7 +20,7 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class, 'client_id');   // كان project::class بحرف صغير
+        return $this->hasMany(Project::class, 'client_id');
     }
 
     public function blogPosts()
