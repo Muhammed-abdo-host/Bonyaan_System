@@ -68,8 +68,7 @@
                                     id="contact-name"
                                     class="form-control"
                                     required
-                                    placeholder="Full Name"
-                                >
+                                    placeholder="Full Name">
                             </div>
 
                             <div class="col-md-6">
@@ -79,8 +78,7 @@
                                     id="contact-email"
                                     class="form-control"
                                     required
-                                    placeholder="email@domain.com"
-                                >
+                                    placeholder="email@domain.com">
                             </div>
 
                             <div class="col-12">
@@ -90,8 +88,7 @@
                                     id="contact-subject"
                                     class="form-control"
                                     required
-                                    placeholder="Inquiry about general contracting..."
-                                >
+                                    placeholder="Inquiry about general contracting...">
                             </div>
 
                             <div class="col-12">
@@ -101,8 +98,7 @@
                                     class="form-control"
                                     rows="5"
                                     required
-                                    placeholder="Describe your project inquiry or engineering requirement..."
-                                ></textarea>
+                                    placeholder="Describe your project inquiry or engineering requirement..."></textarea>
                             </div>
 
                             <div class="col-12 text-center">
@@ -116,8 +112,7 @@
                             <div class="col-12 text-center">
                                 <button
                                     type="submit"
-                                    class="btn btn-met-navy text-white btn-lg px-5 fw-bold"
-                                >
+                                    class="btn btn-met-navy text-white btn-lg px-5 fw-bold">
                                     Send Message
                                 </button>
                             </div>
