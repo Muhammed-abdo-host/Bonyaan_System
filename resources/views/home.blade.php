@@ -1,4 +1,4 @@
-@extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+@extends('components.layouts')
 
 @section('content') <!-- HOME VIEW SECTION -->
 <section id="view-home" class="view-section active animated-fade">
