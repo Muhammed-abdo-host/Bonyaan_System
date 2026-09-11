@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <body style="font-family: Arial, sans-serif; color: #1f2937;">
     <h2>Hello {{ $lead->name }},</h2>
 
@@ -16,4 +17,5 @@
 
     <p>Best regards,<br>Bonyaan Team</p>
 </body>
+
 </html>

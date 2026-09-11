@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <body style="font-family: Arial, sans-serif; color: #1f2937;">
     <h2>New quote request #{{ $lead->id }}</h2>
 
@@ -13,7 +14,8 @@
     </ul>
 
     @if ($lead->notes)
-        <p><strong>Notes:</strong><br>{{ $lead->notes }}</p>
+    <p><strong>Notes:</strong><br>{{ $lead->notes }}</p>
     @endif
 </body>
+
 </html>

@@ -15,10 +15,10 @@
         {{-- Open Positions --}}
         <div class="row g-4 mb-5">
             @foreach ([
-                ['title' => 'Structural Engineer', 'dept' => 'Engineering', 'type' => 'Full-time', 'location' => 'Riyadh'],
-                ['title' => 'Site Supervisor', 'dept' => 'Operations', 'type' => 'Full-time', 'location' => 'Dubai'],
-                ['title' => 'Interior Designer', 'dept' => 'Design', 'type' => 'Full-time', 'location' => 'Riyadh'],
-                ['title' => 'MEP Engineer', 'dept' => 'Engineering', 'type' => 'Full-time', 'location' => 'Riyadh'],
+            ['title' => 'Structural Engineer', 'dept' => 'Engineering', 'type' => 'Full-time', 'location' => 'Riyadh'],
+            ['title' => 'Site Supervisor', 'dept' => 'Operations', 'type' => 'Full-time', 'location' => 'Dubai'],
+            ['title' => 'Interior Designer', 'dept' => 'Design', 'type' => 'Full-time', 'location' => 'Riyadh'],
+            ['title' => 'MEP Engineer', 'dept' => 'Engineering', 'type' => 'Full-time', 'location' => 'Riyadh'],
             ] as $job)
             <div class="col-md-6">
                 <div class="glass-card p-4 h-100 d-flex justify-content-between align-items-center">
@@ -105,50 +105,52 @@
 </section>
 
 <script>
-async function submitCareerForm(e) {
-    e.preventDefault();
+    async function submitCareerForm(e) {
+        e.preventDefault();
 
-    const btn = document.getElementById('career-submit-btn');
-    const alertBox = document.getElementById('career-alert');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting...';
+        const btn = document.getElementById('career-submit-btn');
+        const alertBox = document.getElementById('career-alert');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting...';
 
-    const formData = new FormData();
-    formData.append('name',     document.getElementById('career-name').value);
-    formData.append('email',    document.getElementById('career-email').value);
-    formData.append('phone',    document.getElementById('career-phone').value);
-    formData.append('position', document.getElementById('career-position').value);
-    formData.append('cv',       document.getElementById('career-cv').files[0]);
+        const formData = new FormData();
+        formData.append('name', document.getElementById('career-name').value);
+        formData.append('email', document.getElementById('career-email').value);
+        formData.append('phone', document.getElementById('career-phone').value);
+        formData.append('position', document.getElementById('career-position').value);
+        formData.append('cv', document.getElementById('career-cv').files[0]);
 
-    try {
-        const recaptchaToken = await getRecaptchaToken('career_submit');
-        formData.append('recaptcha_token', recaptchaToken || '');
+        try {
+            const recaptchaToken = await getRecaptchaToken('career_submit');
+            formData.append('recaptcha_token', recaptchaToken || '');
 
-        const res = await fetch('/careers/apply', {
-            method: 'POST',
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
-            body: formData,
-        });
+            const res = await fetch('/careers/apply', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: formData,
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        if (res.ok) {
-            alertBox.className = 'alert alert-success';
-            alertBox.textContent = data.message;
-            document.getElementById('career-form').reset();
-        } else {
-            const errors = Object.values(data.errors || {}).flat().join(' ');
+            if (res.ok) {
+                alertBox.className = 'alert alert-success';
+                alertBox.textContent = data.message;
+                document.getElementById('career-form').reset();
+            } else {
+                const errors = Object.values(data.errors || {}).flat().join(' ');
+                alertBox.className = 'alert alert-danger';
+                alertBox.textContent = errors || data.message || 'Something went wrong.';
+            }
+        } catch {
             alertBox.className = 'alert alert-danger';
-            alertBox.textContent = errors || data.message || 'Something went wrong.';
+            alertBox.textContent = 'Network error. Please try again.';
         }
-    } catch {
-        alertBox.className = 'alert alert-danger';
-        alertBox.textContent = 'Network error. Please try again.';
-    }
 
-    alertBox.classList.remove('d-none');
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-send me-2"></i> Submit Application';
-}
+        alertBox.classList.remove('d-none');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-send me-2"></i> Submit Application';
+    }
 </script>
 @endsection

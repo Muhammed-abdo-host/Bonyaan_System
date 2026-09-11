@@ -13,24 +13,21 @@
 
                 <div class="glass-card p-4 p-md-5">
                     @if ($errors->any())
-                        <div class="alert alert-danger">{{ $errors->first() }}</div>
+                    <div class="alert alert-danger">{{ $errors->first() }}</div>
                     @endif
 
                     <form method="POST" action="{{ route('login.submit') }}">
                         @csrf
                         <div class="mb-3">
-                            <!-- تم إضافة text-dark أو text-secondary هنا -->
                             <label class="form-label fw-semibold text-dark">Email Address</label>
                             <input type="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
                         </div>
                         <div class="mb-3">
-                            <!-- تم إضافة text-dark هنا -->
                             <label class="form-label fw-semibold text-dark">Password</label>
                             <input type="password" name="password" class="form-control" required>
                         </div>
                         <div class="form-check mb-4">
                             <input type="checkbox" name="remember" class="form-check-input" id="remember">
-                            <!-- تم إضافة text-dark هنا كمان -->
                             <label class="form-check-label small text-dark" for="remember">Remember me</label>
                         </div>
                         <button type="submit" class="btn btn-met-gold w-100">Sign In</button>

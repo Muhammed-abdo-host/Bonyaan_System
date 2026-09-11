@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('position');
             $table->string('cv_path')->nullable();
-            $table->enum('status', ['pending', 'reviewed', 'hired', 'rejected'])->default('pending');
-
+            $table->enum('status', ['new', 'reviewing', 'interview', 'hired', 'rejected'])->default('new');
             $table->timestamps();
         });
     }

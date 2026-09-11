@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: bonyaan-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: Bonyaan
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        fromService:
+          type: web
+          name: bonyaan-demo
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: APP_LOCALE
+        value: en
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: MAIL_MAILER
+        value: log
+      - key: QUOTE_NOTIFICATION_EMAIL
+        value: admin@bonyaan.test
+      - key: CONTACT_NOTIFICATION_EMAIL
+        value: admin@bonyaan.test
+      # Left blank on purpose for the public demo — see RecaptchaVerifier::isConfigured().
+      # Fill both in (from https://www.google.com/recaptcha/admin) only if this
+      # ever becomes a real production deploy with real visitors.
+      - key: RECAPTCHA_SITE_KEY
+        value: ""
+      - key: RECAPTCHA_SECRET_KEY
+        value: ""
+      - key: RECAPTCHA_MIN_SCORE
+        value: "0.5"

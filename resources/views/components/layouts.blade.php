@@ -22,13 +22,15 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     @if(config('services.recaptcha.site_key'))
-        <script>
-            window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
-        </script>
-        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
-        <style>
-            .grecaptcha-badge { visibility: hidden; }
-        </style>
+    <script>
+        window.RECAPTCHA_SITE_KEY = @json(config('services.recaptcha.site_key'));
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
     @endif
 </head>
 
@@ -45,11 +47,11 @@
 
             <div class="d-flex align-items-center gap-3">
                 @auth
-                    <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
-                        <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
-                    </span>
+                <span class="badge bg-met-navy-light text-gold border border-warning px-2.5 py-1.5" style="font-size: 0.75rem;">
+                    <i class="bi bi-person-check-fill me-1"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role?->name ?? 'User') }})
+                </span>
                 @else
-                    <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
+                <span class="small text-white-50"><i class="bi bi-shield-check text-gold me-1"></i> ISO 9001:2015 Certified</span>
                 @endauth
             </div>
         </div>
@@ -58,7 +60,6 @@
     <!-- Primary Navigation Bar -->
     <nav class="navbar navbar-expand-xl sticky-top met-navbar py-2.5">
         <div class="container-fluid px-lg-5">
-            <!-- Brand Logo (نظيف واحترافي) -->
             <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
                 <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 38px; height: 38px;">
                     <i class="bi bi-buildings-fill text-gold fs-5"></i>
@@ -66,33 +67,30 @@
                 <span class="fs-4 fw-bold text-white tracking-wide">Bonyaan</span>
             </a>
 
-            <!-- Right Controls: أيقونة تسجيل الدخول بالخارج + زر الموبايل المتناسق -->
             <div class="d-flex align-items-center gap-2 order-xl-3">
                 @auth
-                    @if(auth()->user()->role?->name === 'admin')
-                        <a class="btn btn-met-gold btn-sm px-2.5 py-1.5 fw-bold d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('admin.dashboard') }}">
-                            <i class="bi bi-speedometer2"></i> <span class="d-none d-sm-inline">Dashboard</span>
-                        </a>
-                    @elseif(auth()->user()->role?->name === 'client')
-                        <a class="btn btn-sm btn-outline-warning text-white px-2.5 py-1.5 d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('client.portal') }}">
-                            <i class="bi bi-person-workspace"></i> <span class="d-none d-sm-inline">Portal</span>
-                        </a>
-                    @endif
+                @if(auth()->user()->role?->name === 'admin')
+                <a class="btn btn-met-gold btn-sm px-2.5 py-1.5 fw-bold d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('admin.dashboard') }}">
+                    <i class="bi bi-speedometer2"></i> <span class="d-none d-sm-inline">Dashboard</span>
+                </a>
+                @elseif(auth()->user()->role?->name === 'client')
+                <a class="btn btn-sm btn-outline-warning text-white px-2.5 py-1.5 d-inline-flex align-items-center gap-1.5 rounded-pill" href="{{ route('client.portal') }}">
+                    <i class="bi bi-person-workspace"></i> <span class="d-none d-sm-inline">Portal</span>
+                </a>
+                @endif
 
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
-                        @csrf
-                        <button type="submit" class="btn btn-sm text-white-50 p-1.5 border-0 hover-gold" title="Sign out">
-                            <i class="bi bi-box-arrow-right fs-5"></i>
-                        </button>
-                    </form>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                    @csrf
+                    <button type="submit" class="btn btn-sm text-white-50 p-1.5 border-0 hover-gold" title="Sign out">
+                        <i class="bi bi-box-arrow-right fs-5"></i>
+                    </button>
+                </form>
                 @else
-                    <!-- أيقونة دخول دائرية ناعمة وشيك -->
-                    <a class="nav-icon-btn d-flex align-items-center justify-content-center text-decoration-none" href="{{ route('login') }}" title="Login">
-                        <i class="bi bi-person-circle fs-4 text-white"></i>
-                    </a>
+                <a class="nav-icon-btn d-flex align-items-center justify-content-center text-decoration-none" href="{{ route('login') }}" title="Login">
+                    <i class="bi bi-person-circle fs-4 text-white"></i>
+                </a>
                 @endauth
 
-                <!-- زر القائمة للأجهزة الصغيرة -->
                 <button class="navbar-toggler custom-toggler p-1.5 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -137,7 +135,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-met-navy text-white pt-5 pb-4 border-top border-secondary">
-       <div class="container">
+        <div class="container">
             <div class="row g-4 mb-5">
                 <div class="col-lg-4">
                     <a class="met-brand d-inline-flex align-items-center gap-2 mb-3 text-decoration-none" href="{{ url('/') }}">
@@ -170,11 +168,11 @@
                         <li><a class="text-decoration-none text-white-50" href="{{ url('/estimator') }}">Cost Estimator</a></li>
                         <li><a class="text-decoration-none text-white-50" href="{{ url('/quote') }}">Request Quote</a></li>
                         @auth
-                            @if(auth()->user()->role?->name === 'client')
-                                <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
-                            @elseif(auth()->user()->role?->name === 'admin')
-                                <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
-                            @endif
+                        @if(auth()->user()->role?->name === 'client')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('client.portal') }}">Client Portal</a></li>
+                        @elseif(auth()->user()->role?->name === 'admin')
+                        <li><a class="text-decoration-none text-white-50" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                        @endif
                         @endauth
                     </ul>
                 </div>
@@ -282,5 +280,5 @@
     <script src="{{ asset('js/admin-messages.js') }}"></script>
     <script src="{{ asset('js/admin-blog.js') }}"></script>
 </body>
+
 </html>
-```

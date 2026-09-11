@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Admin\ContactMessageAdminController;
 use App\Http\Controllers\Admin\HrAdminController;
 use App\Http\Controllers\Admin\LeadAdminController;

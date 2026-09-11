@@ -68,6 +68,19 @@ class ProjectSeeder extends Seeder
                 'image' => 'https://images.unsplash.com/photo-1553413077-190dd305871c?w=800',
                 'description' => 'State-of-the-art logistics and distribution facility with automated warehousing systems and heavy concrete slab foundations.',
             ],
+            [
+                'client_id' => $client->id,
+                'name' => 'Sahara Business Park',
+                'type' => 'office',
+                'location' => 'New Cairo, Egypt',
+                'area' => 22000,
+                'floors' => 6,
+                'status' => 'pending',
+                'progress_percent' => 0,
+                'budget' => '$9,500,000',
+                'image' => null,
+                'description' => 'Client-submitted request awaiting admin review — demonstrates the "Request New Project" client portal workflow.',
+            ],
         ];
 
         foreach ($projects as $data) {

@@ -1,4 +1,4 @@
- @extends('components.layouts') {{-- لو عندك layout رئيسي، وإلا احذف السطر ده وحط <html> عادي --}}
+ @extends('components.layouts')
 
  @section('content') <!-- COST ESTIMATOR VIEW SECTION -->
  <section id="view-estimator" class="view-section active animated-fade py-5">
@@ -75,32 +75,32 @@
            <!-- Extra Features -->
            <div class="mb-3">
              <label class="form-label fw-bold">Extra Features & Systems:</label>
-            <div class="row g-3">
-  <div class="col-12 col-sm-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="est-extra-pool" onchange="calculateCost()">
-      <label class="form-check-label small" for="est-extra-pool">Infinity Swimming Pool (+ $35k)</label>
-    </div>
-  </div>
-  <div class="col-12 col-sm-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="est-extra-smart" onchange="calculateCost()">
-      <label class="form-check-label small" for="est-extra-smart">Smart Home Automation (+ $25k)</label>
-    </div>
-  </div>
-  <div class="col-12 col-sm-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="est-extra-solar" onchange="calculateCost()">
-      <label class="form-check-label small" for="est-extra-solar">Solar Microgrid (+ $20k)</label>
-    </div>
-  </div>
-  <div class="col-12 col-sm-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="est-extra-landscape" onchange="calculateCost()">
-      <label class="form-check-label small" for="est-extra-landscape">Landscape & Hardscape (+ $15k)</label>
-    </div>
-  </div>
-</div>
+             <div class="row g-3">
+               <div class="col-12 col-sm-6">
+                 <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="est-extra-pool" onchange="calculateCost()">
+                   <label class="form-check-label small" for="est-extra-pool">Infinity Swimming Pool (+ $35k)</label>
+                 </div>
+               </div>
+               <div class="col-12 col-sm-6">
+                 <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="est-extra-smart" onchange="calculateCost()">
+                   <label class="form-check-label small" for="est-extra-smart">Smart Home Automation (+ $25k)</label>
+                 </div>
+               </div>
+               <div class="col-12 col-sm-6">
+                 <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="est-extra-solar" onchange="calculateCost()">
+                   <label class="form-check-label small" for="est-extra-solar">Solar Microgrid (+ $20k)</label>
+                 </div>
+               </div>
+               <div class="col-12 col-sm-6">
+                 <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="est-extra-landscape" onchange="calculateCost()">
+                   <label class="form-check-label small" for="est-extra-landscape">Landscape & Hardscape (+ $15k)</label>
+                 </div>
+               </div>
+             </div>
            </div>
          </div>
        </div>
