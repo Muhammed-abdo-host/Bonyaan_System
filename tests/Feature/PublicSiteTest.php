@@ -18,8 +18,16 @@ class PublicSiteTest extends TestCase
 
     public static function publicPageUrls(): array
     {
-        return array_map(static fn (string $url): array => [$url], [
-            '/', '/about', '/contact', '/services', '/projects', '/estimator', '/quote', '/blog', '/login',
+        return array_map(static fn(string $url): array => [$url], [
+            '/',
+            '/about',
+            '/contact',
+            '/services',
+            '/projects',
+            '/estimator',
+            '/quote',
+            '/blog',
+            '/login',
         ]);
     }
 
@@ -52,7 +60,11 @@ class PublicSiteTest extends TestCase
             'tier' => 'invalid',
             'extras' => ['invalid'],
         ])->assertUnprocessable()->assertJsonValidationErrors([
-            'area', 'floors', 'type', 'tier', 'extras.0',
+            'area',
+            'floors',
+            'type',
+            'tier',
+            'extras.0',
         ]);
     }
 }
