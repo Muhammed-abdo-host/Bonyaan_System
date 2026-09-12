@@ -37,7 +37,7 @@
 
 ## 🚀 Live Demo
 
-🔗 **[bonyaan-demo.example.com](https://bonyaan-demo.example.com)**
+🔗 **[bonyaan-demo.example.com](https://bonyaan-demo-production.up.railway.app)**
 
 | Role   | Email                 | Password   |
 | ------ | --------------------- | ---------- |
