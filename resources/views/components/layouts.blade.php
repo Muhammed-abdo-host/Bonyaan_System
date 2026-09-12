@@ -58,7 +58,7 @@
     </div>
 
     <!-- Primary Navigation Bar -->
-    <nav class="navbar navbar-expand-xl sticky-top met-navbar py-2.5">
+    <nav class="navbar navbar-expand-xl met-navbar py-2.5">
         <div class="container-fluid px-lg-5">
             <a class="met-brand d-flex align-items-center gap-2 text-decoration-none me-3" href="{{ url('/') }}">
                 <div class="rounded-3 bg-met-navy d-flex align-items-center justify-content-center border border-warning" style="width: 38px; height: 38px;">
