@@ -27,11 +27,6 @@ body {
   line-height: 1.6;
 }
 
-@media (min-width: 768px) {
-  .met-navbar {
-    top: 40px !important; 
-  }
-}
 /* Navbar & Header */
 .top-header {
   background-color: var(--met-navy);
