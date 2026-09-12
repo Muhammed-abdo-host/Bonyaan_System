@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="docs/screenshots/Logo.png" alt="Bonyaan — Premier Construction & Contracting" width="100%">
-</p>
 
 <h1 align="center">Bonyaan</h1>
 <p align="center">A full-stack construction & contracting platform — from an instant cost estimate to a live, photo-tracked build.</p>
@@ -37,7 +34,7 @@
 
 ## 🚀 Live Demo
 
-🔗 **[bonyaan-demo.example.com](https://bonyaan-demo.example.com)**
+🔗 **[bonyaan-demo.example.com](https://bonyaan-demo-production.up.railway.app)**
 
 | Role   | Email                 | Password   |
 | ------ | --------------------- | ---------- |
