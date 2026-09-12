@@ -20,8 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        Gate::define('access-admin', fn ($user) => $user->role?->name === 'admin');
-        Gate::define('access-client', fn ($user) => $user->role?->name === 'client');
+        if ($this->app->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+        Gate::define('access-admin', fn($user) => $user->role?->name === 'admin');
+        Gate::define('access-client', fn($user) => $user->role?->name === 'client');
     }
 }
