@@ -17,16 +17,21 @@
   --met-font-en: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+
 body {
   font-family: var(--met-font-en);
   background-color: #F8FAFC;
   color: #1E293B;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   line-height: 1.6;
 }
 
+@media (min-width: 768px) {
+  .met-navbar {
+    top: 40px !important; 
+  }
+}
 /* Navbar & Header */
 .top-header {
   background-color: var(--met-navy);
@@ -36,8 +41,9 @@ body {
 }
 
 .met-navbar {
-  background-color: var(--met-navy-light);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background-color: var(--met-navy-light) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  width: 100%;
   transition: all 0.3s ease;
 }
 
